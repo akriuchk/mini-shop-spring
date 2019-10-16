@@ -38,6 +38,64 @@ databaseChangeLog:
                   type: longblob
                   constraints:
                     nullable: false
+
+        - createTable:
+            tableName: linen
+            columns:
+              - column:
+                  name: id
+                  type: long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_small_available
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_middle_available
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_euro_available
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_duo_available
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: catalog_id
+                  type: long
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: linen_catalog
+            columns:
+              - column:
+                  name: catalog_id
+                  type: long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
   - changeSet:
       id: 2
       author: akriuchk
