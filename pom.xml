@@ -20,6 +20,8 @@
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
         <springfox.swagger.model.version>1.5.21</springfox.swagger.model.version>
         <springfox.swagger.annotation.version>1.5.21</springfox.swagger.annotation.version>
+
+        <powermock.version>2.0.2</powermock.version>
     </properties>
 
     <dependencies>
@@ -92,6 +94,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito2</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
         </dependency>
     </dependencies>
 

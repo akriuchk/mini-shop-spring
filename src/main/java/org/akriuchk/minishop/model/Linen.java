@@ -3,12 +3,14 @@ package org.akriuchk.minishop.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @EqualsAndHashCode
+@ToString
 public class Linen {
 
     @Id
@@ -24,6 +26,7 @@ public class Linen {
     @ManyToOne
     @JoinColumn(name="catalog_id", nullable=false)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     private LinenCatalog linenCatalog;
 }
