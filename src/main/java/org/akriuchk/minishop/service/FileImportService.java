@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.akriuchk.minishop.model.Linen;
 import org.akriuchk.minishop.model.LinenCatalog;
 import org.akriuchk.minishop.repository.LinenCatalogRepository;
+import org.akriuchk.minishop.repository.LinenRepository;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class FileImportService {
     private final LinenCatalogRepository linenCatalogRepository;
+    private final LinenRepository linenRepository;
 
     public List<LinenCatalog> parse(MultipartFile file) {
         LinkedList<LinenCatalog> catalogs = new LinkedList<>();
@@ -31,16 +33,19 @@ public class FileImportService {
                 int firstCellNum = determineFirstColumn(sheet.getRow(sheet.getFirstRowNum()));
                 sheet.rowIterator().forEachRemaining(row -> {
                     if (hasMergedCellsInRow(sheet, row)) {
-                        LinenCatalog catalog = new LinenCatalog();
+                        String linenCatalogName = row.getCell(firstCellNum).getStringCellValue().trim();
+                        log.info("Working with '{}'", linenCatalogName);
+                        LinenCatalog catalog = linenCatalogRepository.findByName(linenCatalogName);
+                        if (catalog == null) {
+                            log.error("{} not found! Add it first to catalog list", linenCatalogName);
+                        }
                         catalogs.add(catalog);
-                        String linenCatalog = row.getCell(firstCellNum).getStringCellValue().trim();
-                        catalog.setName(linenCatalog);
-                    }
-
-                    if (row.getRowNum() != 0 && row.getPhysicalNumberOfCells() != 0 && !getStringValue(row, firstCellNum).isEmpty()) {
+                    } else if (row.getRowNum() != 0 && row.getPhysicalNumberOfCells() != 0 && !getStringValue(row, firstCellNum).isEmpty()) {
                         Linen linen = rowProceed(firstCellNum, row);
                         catalogs.getLast().getLinens().add(linen);
                         linen.setLinenCatalog(catalogs.getLast());
+                    } else {
+                        log.error("Undefined row: {}", row.getCell(firstCellNum));
                     }
                 });
             });
@@ -58,13 +63,17 @@ public class FileImportService {
     }
 
     private Linen rowProceed(int firstCellNum, Row row) {
-        Linen linen = new Linen();
         Cell cell = row.getCell(firstCellNum);
         if (cell == null) {
             String error = String.format("Cell in row '%s':%s not found", row.getSheet().getSheetName(), row.getRowNum());
             throw new RuntimeException(error);
         }
-        linen.setName(getStringValue(row, firstCellNum));
+        String parsedLinenName = getStringValue(row, firstCellNum);
+        Linen linen = linenRepository.findByName(parsedLinenName).orElseGet(() -> {
+            Linen l = new Linen();
+            l.setName(parsedLinenName);
+            return l;
+        });
         determineAvailability(linen, row, firstCellNum);
         return linen;
     }
@@ -81,7 +90,6 @@ public class FileImportService {
     }
 
     private static final String NO = "нет";
-    private static final String YES = "есть";
 
     private void determineAvailability(Linen linen, Row row, int firstCellNum) {
         log.info("Processing {}", linen.getName());

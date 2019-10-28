@@ -4,27 +4,6 @@ databaseChangeLog:
       author: akriuchk
       changes:
         - createTable:
-            tableName: bed_sheet
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: content
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: image_id
-                  type: varchar(255)
-                  constraints:
-                    nullable: true
-
-        - createTable:
             tableName: image
             columns:
               - column:
@@ -75,6 +54,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: image_id
+                  type: uuid
+                  constraints:
+                    nullable: true
+              - column:
                   name: catalog_id
                   type: BIGINT
                   constraints:
@@ -95,14 +79,16 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
-
   - changeSet:
       id: 2
       author: akriuchk
       changes:
-        - insert:
-            tableName: bed_sheet
-            columns:
-              - column:
-                  name: content
-                  value: fialki
+        - sql: insert into linen_catalog (catalog_id, name) values (1, 'КПБ БЯЗЬ"ХЛОПКОВЫЙ КРАЙ"')
+        - sql: insert into linen_catalog (catalog_id, name) values (2, 'КПБ САТИН"ХЛОПКОВЫЙ КРАЙ"')
+        - sql: insert into linen_catalog (catalog_id, name) values (3, 'КПБ ПЕРКАЛЬ MIRAROSSI')
+        - sql: insert into linen_catalog (catalog_id, name) values (4, 'Василиса  САТИН')
+        - sql: insert into linen_catalog (catalog_id, name) values (5, 'КПБ ВАСИЛИСА "МОДЕРН", "СОУЛ", "Нежные объятия"')
+        - sql: insert into linen_catalog (catalog_id, name) values (6, 'КПБ ВАСИЛИСА "НЕЖНОСТЬ", "ОНЕГИН", "ЛОФТ", "МИЛЬФЛЕР", "ЦАРЕВНА"')
+        - sql: insert into linen_catalog (catalog_id, name) values (7, 'КПБ ВАСИЛИСА "БЕЛАЯ" ранфорс')
+        - sql: insert into linen_catalog (catalog_id, name) values (8, 'КПБ  Т М  " Василиса ПРЕМИУМ  - роскошный подарок к НГОДУ')
+        - sql: insert into linen_catalog (catalog_id, name) values (9, 'САТИН  ШИК  Кружевной')

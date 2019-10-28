@@ -3,6 +3,7 @@ package org.akriuchk.minishop.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -19,14 +20,16 @@ public class LinenCatalog {
     @Column(name = "catalog_id")
     private long id;
 
+    @Column(unique = true)
     private String name;
 
+    @Lazy
     @OneToMany(
             mappedBy = "linenCatalog",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
-
     @EqualsAndHashCode.Exclude
     private Set<Linen> linens = new HashSet<>();
 }

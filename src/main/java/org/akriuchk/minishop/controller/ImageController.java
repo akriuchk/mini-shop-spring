@@ -3,6 +3,7 @@ package org.akriuchk.minishop.controller;
 import lombok.AllArgsConstructor;
 import org.akriuchk.minishop.model.Image;
 import org.akriuchk.minishop.repository.ImageRepository;
+import org.akriuchk.minishop.service.ImageImportService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class ImageController {
 
     private final ImageRepository imageRepository;
+    private final ImageImportService imageImportService;
 
     @PostMapping(
             value = "/image",
@@ -33,8 +35,7 @@ public class ImageController {
             value = "/image/{imageId}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
-    public @ResponseBody
-    byte[] getImageWithMediaType(@PathVariable String imageId) throws IOException {
+    public @ResponseBody byte[] getImageWithMediaType(@PathVariable String imageId) throws IOException {
         Optional<Image> image = imageRepository.findById(imageId);
         if (image.isPresent()) {
             return image.get().getImageContent();
@@ -42,4 +43,17 @@ public class ImageController {
             throw new RuntimeException("No images found with id: " + imageId);
         }
     }
+
+
+    @PostMapping(
+            value = "/linenimage",
+            produces = MediaType.TEXT_PLAIN_VALUE
+    )
+    public void saveLinenImage(
+            @RequestParam("linenName") String linenName,
+            @RequestParam("image") MultipartFile file) throws IOException {
+        imageImportService.putLinenImage(linenName, file);
+    }
+
+
 }

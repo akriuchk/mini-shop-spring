@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LinenCatalogRepository extends CrudRepository<LinenCatalog, Long> {
+    LinenCatalog findByName(String name);
 }

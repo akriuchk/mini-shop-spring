@@ -23,6 +23,8 @@ public class Linen {
     private boolean isEuroAvailable;
     private boolean isDuoAvailable;
 
+    private String imageId;
+
     @ManyToOne
     @JoinColumn(name="catalog_id", nullable=false)
     @EqualsAndHashCode.Exclude
