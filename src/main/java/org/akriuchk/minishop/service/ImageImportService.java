@@ -32,7 +32,7 @@ public class ImageImportService {
             image.setImageContent(importFile.getBytes());
             imageRepository.save(image);
 
-            linen.setImageId(image.getId());
+            linen.setImage(image);
             linenRepository.save(linen);
         } catch (IOException e) {
             throw new RuntimeException("Error in image saving!", e);

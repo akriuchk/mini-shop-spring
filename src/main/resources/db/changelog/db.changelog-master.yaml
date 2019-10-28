@@ -54,7 +54,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: image_id
+                  name: image
                   type: uuid
                   constraints:
                     nullable: true

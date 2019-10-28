@@ -39,6 +39,6 @@ public class ImageImportServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile(filename, inputStream);
 
         imageImportService.putLinenImage("some_name", multipartFile);
-        Assert.assertNotNull(l.getImageId());
+        Assert.assertNotNull(l.getImage());
     }
 }
