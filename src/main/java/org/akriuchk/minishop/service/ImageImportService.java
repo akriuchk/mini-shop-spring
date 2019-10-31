@@ -26,14 +26,10 @@ public class ImageImportService {
 
     public void putLinenImage(String linenName, MultipartFile importFile) {
         Linen linen = linenRepository.findByName(linenName).orElseThrow(() -> new RuntimeException("Linen not found"));
-
+        Image image = imageRepository.findById(linen.getId()).orElseGet(Image::new);
         try {
-            Image image = new Image();
             image.setImageContent(importFile.getBytes());
             imageRepository.save(image);
-
-            linen.setImage(image);
-            linenRepository.save(linen);
         } catch (IOException e) {
             throw new RuntimeException("Error in image saving!", e);
         }

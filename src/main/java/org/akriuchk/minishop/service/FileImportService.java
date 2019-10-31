@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,11 +36,12 @@ public class FileImportService {
                     if (hasMergedCellsInRow(sheet, row)) {
                         String linenCatalogName = row.getCell(firstCellNum).getStringCellValue().trim();
                         log.info("Working with '{}'", linenCatalogName);
-                        LinenCatalog catalog = linenCatalogRepository.findByName(linenCatalogName);
-                        if (catalog == null) {
+                        Optional<LinenCatalog> linenCatalogRequest = linenCatalogRepository.findByName(linenCatalogName);
+
+                        if (!linenCatalogRequest.isPresent()) {
                             log.error("{} not found! Add it first to catalog list", linenCatalogName);
                         }
-                        catalogs.add(catalog);
+                        catalogs.add(linenCatalogRequest.get());
                     } else if (row.getRowNum() != 0 && row.getPhysicalNumberOfCells() != 0 && !getStringValue(row, firstCellNum).isEmpty()) {
                         Linen linen = rowProceed(firstCellNum, row);
                         catalogs.getLast().getLinens().add(linen);
@@ -143,5 +145,4 @@ public class FileImportService {
         }
         return "";
     }
-
 }

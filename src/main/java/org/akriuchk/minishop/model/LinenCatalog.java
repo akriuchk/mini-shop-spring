@@ -3,7 +3,6 @@ package org.akriuchk.minishop.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -23,7 +22,6 @@ public class LinenCatalog {
     @Column(unique = true)
     private String name;
 
-    @Lazy
     @OneToMany(
             mappedBy = "linenCatalog",
             cascade = CascadeType.ALL,

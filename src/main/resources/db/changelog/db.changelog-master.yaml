@@ -8,16 +8,14 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: uuid
+                  type: BIGINT
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
                   name: image_content
                   type: BYTEA
-                  constraints:
-                    nullable: false
-
         - createTable:
             tableName: linen
             columns:
@@ -55,7 +53,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: image
-                  type: uuid
+                  type: BIGINT
                   constraints:
                     nullable: true
               - column:

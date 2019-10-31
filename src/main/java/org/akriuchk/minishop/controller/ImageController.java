@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import org.akriuchk.minishop.model.Image;
 import org.akriuchk.minishop.repository.ImageRepository;
 import org.akriuchk.minishop.service.ImageImportService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -23,7 +24,7 @@ public class ImageController {
             value = "/image",
             produces = MediaType.TEXT_PLAIN_VALUE
     )
-    public String saveImage(@RequestParam("image") MultipartFile file) throws IOException {
+    public long saveImage(@RequestParam("image") MultipartFile file) throws IOException {
         Image image = new Image();
         image.setImageContent(file.getBytes());
         imageRepository.save(image);
@@ -35,13 +36,13 @@ public class ImageController {
             value = "/image/{imageId}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
-    public @ResponseBody byte[] getImageWithMediaType(@PathVariable String imageId) throws IOException {
-        Optional<Image> image = imageRepository.findById(imageId);
-        if (image.isPresent()) {
-            return image.get().getImageContent();
-        } else {
-            throw new RuntimeException("No images found with id: " + imageId);
+    public @ResponseBody
+    byte[] getImageWithMediaType(@PathVariable long imageId) {
+        byte[] image = imageRepository.findById(imageId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Image not found")).getImageContent();
+        if ( image.length == 0) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Image not found");
         }
+        return image;
     }
 
 
@@ -51,7 +52,7 @@ public class ImageController {
     )
     public void saveLinenImage(
             @RequestParam("linenName") String linenName,
-            @RequestParam("image") MultipartFile file) throws IOException {
+            @RequestParam("image") MultipartFile file) {
         imageImportService.putLinenImage(linenName, file);
     }
 

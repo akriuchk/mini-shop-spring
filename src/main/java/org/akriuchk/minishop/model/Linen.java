@@ -1,11 +1,14 @@
 package org.akriuchk.minishop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.akriuchk.minishop.converter.ImageToUrlSerializer;
 
 import javax.persistence.*;
+
 
 @Entity
 @Data
@@ -23,13 +26,14 @@ public class Linen {
     private boolean isEuroAvailable;
     private boolean isDuoAvailable;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     @EqualsAndHashCode.Exclude
-    private Image image;
+    @JsonSerialize(using = ImageToUrlSerializer.class)
+    private Image image = new Image();
 
     @ManyToOne
-    @JoinColumn(name="catalog_id", nullable=false)
+    @JoinColumn(name = "catalog_id", nullable = false)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
