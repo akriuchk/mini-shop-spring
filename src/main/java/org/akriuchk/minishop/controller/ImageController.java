@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${cors.url}")
 public class ImageController {
 
     private final ImageRepository imageRepository;

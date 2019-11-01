@@ -14,14 +14,18 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${cors.url}")
 public class CatalogController {
 
     private final LinenCatalogRepository linencatalogRepository;
     private final LinenRepository linenRepository;
 
     @GetMapping("/catalog")
-    public List<LinenCatalog> getPictures() {
+    public List<LinenCatalog> getPictures(@RequestParam boolean onlyAvailable) {
+        if (onlyAvailable) {
+            return linencatalogRepository.findAllByLinensIsNotEmpty();
+        }
+
         return (List<LinenCatalog>) linencatalogRepository.findAll();
     }
 
