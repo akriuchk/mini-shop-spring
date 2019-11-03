@@ -77,6 +77,11 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+                    unique: true
+                    uniqueConstraintName: "u_cat_name"
+              - column:
+                  name: display_name
+                  type: varchar(255)
   - changeSet:
       id: 2
       author: akriuchk
@@ -89,4 +94,7 @@ databaseChangeLog:
         - sql: insert into linen_catalog (catalog_id, name) values (6, 'КПБ ВАСИЛИСА "НЕЖНОСТЬ", "ОНЕГИН", "ЛОФТ", "МИЛЬФЛЕР", "ЦАРЕВНА"')
         - sql: insert into linen_catalog (catalog_id, name) values (7, 'КПБ ВАСИЛИСА "БЕЛАЯ" ранфорс')
         - sql: insert into linen_catalog (catalog_id, name) values (8, 'КПБ  Т М  " Василиса ПРЕМИУМ  - роскошный подарок к НГОДУ')
-        - sql: insert into linen_catalog (catalog_id, name) values (9, 'САТИН  ШИК  Кружевной')
+        - sql: insert into linen_catalog (catalog_id, name) values (10, 'КПБ" Василиса"')
+        - sql: insert into linen_catalog (catalog_id, name) values (11, 'нэкст')
+        - sql: insert into linen_catalog (catalog_id, name) values (12, 'Ботаническая гравюра')
+        - sql: insert into linen_catalog (catalog_id, name) values (13, 'ЛЕТО,МОРЕ')

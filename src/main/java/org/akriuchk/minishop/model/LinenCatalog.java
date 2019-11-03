@@ -22,6 +22,9 @@ public class LinenCatalog {
     @Column(unique = true)
     private String name;
 
+    @Column
+    private String displayName;
+
     @OneToMany(
             mappedBy = "linenCatalog",
             cascade = CascadeType.ALL,
