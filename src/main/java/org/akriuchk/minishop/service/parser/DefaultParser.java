@@ -9,9 +9,7 @@ import org.akriuchk.minishop.repository.LinenRepository;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.akriuchk.minishop.service.parser.ExcelUtils.*;
 
@@ -30,6 +28,7 @@ public class DefaultParser extends AbstractParser {
     @Override
     public List<LinenCatalog> parse(Workbook book) {
         LinkedList<LinenCatalog> catalogs = new LinkedList<>();
+        Set<Linen> updatedLinens = new HashSet<>();
         book.forEach(sheet -> {
             if (sheet.getPhysicalNumberOfRows() == 0) {
                 return;
@@ -39,9 +38,6 @@ public class DefaultParser extends AbstractParser {
                 if (hasMergedCellsInRow(sheet, row)) {
                     String linenCatalogName = row.getCell(firstCellNum).getStringCellValue().trim();
                     log.info("Working with '{}'", linenCatalogName);
-                    if (linenCatalogName.contains("ЗАКАЗ")) {
-                        return;
-                    }
                     Optional<LinenCatalog> linenCatalogRequest = linenCatalogRepository.findByName(linenCatalogName);
 
                     if (!linenCatalogRequest.isPresent()) {
@@ -52,11 +48,14 @@ public class DefaultParser extends AbstractParser {
                     Linen linen = rowProceed(firstCellNum, row);
                     catalogs.getLast().getLinens().add(linen);
                     linen.setLinenCatalog(catalogs.getLast());
+                    updatedLinens.add(linen);
                 } else {
                     log.error("Undefined row: {}", row.getCell(firstCellNum));
                 }
             });
         });
+        processNotUpdatedLinens(catalogs, updatedLinens);
+
         return catalogs;
     }
 

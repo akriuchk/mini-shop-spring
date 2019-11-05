@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.akriuchk.minishop.service.parser.ExcelUtils.getStringValue;
 
@@ -17,6 +18,7 @@ import static org.akriuchk.minishop.service.parser.ExcelUtils.getStringValue;
 public abstract class AbstractParser {
 
     public abstract List<LinenCatalog> parse(Workbook book);
+
     public abstract boolean isFileValid(Workbook workbook);
 
 
@@ -36,8 +38,22 @@ public abstract class AbstractParser {
         return linen;
     }
 
+    void processNotUpdatedLinens(List<LinenCatalog> catalogs, Set<Linen> updatedLinens) {
+        catalogs.stream().flatMap(c -> c.getLinens().stream())
+                .filter(l -> !updatedLinens.contains(l))
+                .forEach(l -> {
+                    l.setSmallAvailable(false);
+                    l.setMiddleAvailable(false);
+                    l.setDuoAvailable(false);
+                    l.setEuroAvailable(false);
+                });
+    }
+
+
     abstract void determineAvailability(Linen linen, Row row, int firstCellNum);
+
     abstract LinenRepository getLinenRepository();
+
     abstract LinenCatalogRepository getLinenCatalogRepository();
 
 }
