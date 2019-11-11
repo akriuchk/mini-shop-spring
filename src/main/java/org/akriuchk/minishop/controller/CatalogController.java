@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "${cors.url}")
 public class CatalogController {
-
     private final LinenCatalogRepository linencatalogRepository;
     private final LinenRepository linenRepository;
 

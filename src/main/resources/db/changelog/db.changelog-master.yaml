@@ -16,6 +16,17 @@ databaseChangeLog:
               - column:
                   name: image_content
                   type: BYTEA
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: is_linked
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: linen_id
+                  type: BIGINT
         - createTable:
             tableName: linen
             columns:
@@ -51,11 +62,6 @@ databaseChangeLog:
                   type: boolean
                   constraints:
                     nullable: false
-              - column:
-                  name: image
-                  type: BIGINT
-                  constraints:
-                    nullable: true
               - column:
                   name: catalog_id
                   type: BIGINT

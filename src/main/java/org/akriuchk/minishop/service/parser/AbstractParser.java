@@ -38,6 +38,12 @@ public abstract class AbstractParser {
         return linen;
     }
 
+    /**
+     * if linen was not in file then set availability to false
+     *
+     * @param catalogs      prevois catalogs
+     * @param updatedLinens new catalogs
+     */
     void processNotUpdatedLinens(List<LinenCatalog> catalogs, Set<Linen> updatedLinens) {
         catalogs.stream().flatMap(c -> c.getLinens().stream())
                 .filter(l -> !updatedLinens.contains(l))

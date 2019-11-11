@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.akriuchk.minishop.converter.ImageToUrlSerializer;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -26,11 +27,16 @@ public class Linen {
     private boolean isEuroAvailable;
     private boolean isDuoAvailable;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+
+    @OneToMany(
+            mappedBy = "linen",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
     @EqualsAndHashCode.Exclude
     @JsonSerialize(using = ImageToUrlSerializer.class)
-    private Image image = new Image();
+    private Set<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "catalog_id", nullable = false)
