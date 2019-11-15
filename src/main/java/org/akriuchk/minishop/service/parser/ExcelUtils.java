@@ -26,7 +26,7 @@ public class ExcelUtils {
     public static boolean rowContainsValue(Row row, String textToCheck) {
         for (int i = 0; i < row.getLastCellNum(); i++) {
             String parsedCellValue = getStringValue(row, i).toLowerCase().trim();
-            if (parsedCellValue.contains(textToCheck)) {
+            if (parsedCellValue.contains(textToCheck.toLowerCase())) {
                 return true;
             }
         }

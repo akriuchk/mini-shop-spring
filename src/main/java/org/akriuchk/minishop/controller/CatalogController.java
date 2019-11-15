@@ -3,8 +3,8 @@ package org.akriuchk.minishop.controller;
 import lombok.AllArgsConstructor;
 import org.akriuchk.minishop.model.Linen;
 import org.akriuchk.minishop.model.LinenCatalog;
-import org.akriuchk.minishop.repository.LinenCatalogRepository;
 import org.akriuchk.minishop.repository.LinenRepository;
+import org.akriuchk.minishop.service.CatalogService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,16 +16,12 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "${cors.url}")
 public class CatalogController {
-    private final LinenCatalogRepository linencatalogRepository;
+    private final CatalogService catalogService;
     private final LinenRepository linenRepository;
 
     @GetMapping("/catalog")
-    public List<LinenCatalog> getPictures(@RequestParam boolean onlyAvailable) {
-        if (onlyAvailable) {
-            return linencatalogRepository.findAllByLinensIsNotEmpty();
-        }
-
-        return (List<LinenCatalog>) linencatalogRepository.findAll();
+    public List<LinenCatalog> getCatalogs(@RequestParam boolean onlyAvailable) {
+        return catalogService.getCatalogs(onlyAvailable);
     }
 
     @GetMapping("/findByNameContainingIgnoreCase")

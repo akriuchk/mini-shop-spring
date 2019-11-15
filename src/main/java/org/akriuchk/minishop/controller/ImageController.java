@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -55,7 +56,11 @@ public class ImageController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Map<Image, Set<Linen>> getImagesForMatching() {
-        return imageImportService.getUntagged();
+        return imageImportService.getUntagged()
+                .entrySet()
+                .stream().peek(e -> e.getKey().setImageContent(new byte[0]))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+//        return imageImportService.getUntagged();
     }
 
     @PostMapping(

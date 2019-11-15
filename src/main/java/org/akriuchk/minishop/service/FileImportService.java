@@ -8,6 +8,7 @@ import org.akriuchk.minishop.repository.LinenCatalogRepository;
 import org.akriuchk.minishop.repository.LinenRepository;
 import org.akriuchk.minishop.service.parser.AbstractParser;
 import org.akriuchk.minishop.service.parser.DefaultParser;
+import org.akriuchk.minishop.service.parser.DisneyParser;
 import org.akriuchk.minishop.service.parser.VasilisaBjazParser;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -47,7 +48,7 @@ public class FileImportService {
 
 
     public List<LinenCatalog> parse(MultipartFile file, CatalogEnum catalog) {
-        List<LinenCatalog> catalogs = new ArrayList<>();
+        List<LinenCatalog> catalogs;
         try {
             Workbook book = WorkbookFactory.create(file.getInputStream());
             parser = getAndValidateParser(book, catalog);
@@ -66,6 +67,8 @@ public class FileImportService {
             parser = new DefaultParser(linenCatalogRepository, linenRepository);
         } else if (catalog == CatalogEnum.VASILISA_BYAZ) {
             parser = new VasilisaBjazParser(linenCatalogRepository, linenRepository);
+        } else if (catalog == CatalogEnum.DISNEY) {
+            parser = new DisneyParser(linenCatalogRepository, linenRepository);
         } else {
             throw new RuntimeException("Parser for catalog not found");
         }

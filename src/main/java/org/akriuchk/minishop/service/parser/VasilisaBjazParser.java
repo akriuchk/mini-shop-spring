@@ -73,7 +73,7 @@ public class VasilisaBjazParser extends AbstractParser {
                     return;
                 }
 
-                if (hasMergedCellsInRow(sheet, row) || rowContainsValue(row, VASILISA.toLowerCase())) {
+                if (hasMergedCellsInRow(sheet, row) || rowContainsValue(row, VASILISA)) {
                     String linenCatalogName = getStringValue(row, firstCellNum + 1);
                     if (linenCatalogName.isEmpty()) {
                         return;

@@ -57,10 +57,9 @@ public class ImageImportService {
                         linen.getImages().add(img);
                         img.setLinked(true);
                         img.setLinen(linen);
-                        imageRepository.save(img);
+                        linenRepository.save(linen);
                         log.debug("linen {} -> img {}", linen.getName(), img.getName());
                     }
-                    img.setImageContent(new byte[0]); //to not send content
                 }
         );
         return resultMap;

@@ -104,3 +104,8 @@ databaseChangeLog:
         - sql: insert into linen_catalog (catalog_id, name) values (11, 'нэкст')
         - sql: insert into linen_catalog (catalog_id, name) values (12, 'Ботаническая гравюра')
         - sql: insert into linen_catalog (catalog_id, name) values (13, 'ЛЕТО,МОРЕ')
+        - sql: insert into linen_catalog (catalog_id, name) values (14, 'ДИСНЕЙ')
+        - sql: insert into linen_catalog (catalog_id, name) values (15, 'Твой стиль')
+        - sql: insert into linen_catalog (catalog_id, name) values (16, 'КПБ Василек беби 203/150 бязь наб 40х60')
+        - sql: insert into linen_catalog (catalog_id, name) values (17, 'КПБ Василек юниор  203/150 бязь наб 40х60')
+        - sql: insert into linen_catalog (catalog_id, name) values (19, 'КПБ Клео сатин Юниор')

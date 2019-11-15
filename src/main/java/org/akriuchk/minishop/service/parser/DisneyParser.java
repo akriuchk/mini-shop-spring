@@ -1,6 +1,6 @@
 package org.akriuchk.minishop.service.parser;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.akriuchk.minishop.model.Linen;
 import org.akriuchk.minishop.model.LinenCatalog;
@@ -13,16 +13,44 @@ import java.util.*;
 
 import static org.akriuchk.minishop.service.parser.ExcelUtils.*;
 
-@Slf4j
-@AllArgsConstructor
-public class DefaultParser extends AbstractParser {
 
+@Slf4j
+@RequiredArgsConstructor
+public class DisneyParser extends AbstractParser {
     private final LinenCatalogRepository linenCatalogRepository;
     private final LinenRepository linenRepository;
 
+    private Map<String, Boolean> checkMap = new HashMap<String, Boolean>() {{
+        put("ТИНЕЙДЖЕР".toLowerCase(), false);
+        put("ДИСНЕЙ".toLowerCase(), false);
+    }};
+
+    private static final String N_RIS = "№ рис.";
+    private static final String DISNEY = "ДИСНЕЙ";
+
+
+    private int firstCellNum = 0;
+
     @Override
     public boolean isFileValid(Workbook workbook) {
-        return true;
+        workbook.forEach(sheet -> {
+            if (sheet.getPhysicalNumberOfRows() == 0) {
+                return;
+            }
+            firstCellNum = determineFirstColumn(sheet.getRow(sheet.getFirstRowNum()));
+            sheet.rowIterator().forEachRemaining(this::checkRow);
+        });
+        return checkMap.values().stream().allMatch(Boolean::booleanValue);
+    }
+
+    private void checkRow(Row row) {
+        row.forEach(cell -> {
+            if (cell == null) {
+                return;
+            }
+            String parsedCellValue = getStringValue(cell).toLowerCase().trim();
+            checkMap.computeIfPresent(parsedCellValue, (k, v) -> true);
+        });
     }
 
     @Override
@@ -33,27 +61,43 @@ public class DefaultParser extends AbstractParser {
             if (sheet.getPhysicalNumberOfRows() == 0) {
                 return;
             }
-            int firstCellNum = determineFirstColumn(sheet.getRow(sheet.getFirstRowNum()));
-            sheet.rowIterator().forEachRemaining(row -> {
-                if (hasMergedCellsInRow(sheet, row)) {
-                    String linenCatalogName = row.getCell(firstCellNum).getStringCellValue().trim();
-                    log.info("Working with '{}'", linenCatalogName);
-                    Optional<LinenCatalog> linenCatalogRequest = linenCatalogRepository.findByName(linenCatalogName);
+            firstCellNum = determineFirstColumn(sheet.getRow(sheet.getFirstRowNum()));
 
-                    if (!linenCatalogRequest.isPresent()) {
-                        log.error("{} not found! Add it first to catalog list", linenCatalogName);
+            sheet.rowIterator().forEachRemaining(row -> {
+                if (rowContainsValue(row, DISNEY)) {
+                    return;
+                }
+                if (hasMergedCellsInRow(sheet, row) || rowContainsValue(row, N_RIS)) {
+                    String linenCatalogName;
+                    if (rowContainsValue(row, N_RIS)) {
+                        linenCatalogName = DISNEY;
+                    } else {
+                        linenCatalogName = getStringValue(row, firstCellNum + 1);
                     }
-                    catalogs.add(linenCatalogRequest.get());
+                    if (linenCatalogName.isEmpty()) {
+                        return;
+                    }
+                    log.info("Working with '{}'", linenCatalogName);
+
+                    LinenCatalog catalog = linenCatalogRepository.findByName(linenCatalogName).orElseGet(() -> {
+                        LinenCatalog newCatalog = new LinenCatalog();
+                        newCatalog.setName(linenCatalogName);
+                        return newCatalog;
+                    });
+                    catalogs.add(catalog);
+
                 } else if (row.getRowNum() != 0 && row.getPhysicalNumberOfCells() != 0 && !getStringValue(row, firstCellNum).isEmpty()) {
                     Linen linen = rowProceed(firstCellNum, row);
                     catalogs.getLast().getLinens().add(linen);
                     linen.setLinenCatalog(catalogs.getLast());
                     updatedLinens.add(linen);
+
                 } else {
                     log.error("Undefined row: {}", row.getCell(firstCellNum));
                 }
             });
         });
+
         processNotUpdatedLinens(catalogs, updatedLinens);
 
         return catalogs;
@@ -61,8 +105,6 @@ public class DefaultParser extends AbstractParser {
 
     @Override
     void determineAvailability(Linen linen, Row row, int firstCellNum) {
-        String NO = "нет";
-
         log.info("Processing {}", linen.getName());
         String smallSizeCellContent = getStringValue(row, firstCellNum + 2).toLowerCase().trim();
         String middleSizeCellContent = getStringValue(row, firstCellNum + 3).toLowerCase().trim();
@@ -70,31 +112,31 @@ public class DefaultParser extends AbstractParser {
         String duoSizeCellContent = getStringValue(row, firstCellNum + 5).toLowerCase().trim();
 
 
-        if (smallSizeCellContent.contains(NO)) {
+        if (smallSizeCellContent.isEmpty()) {
             linen.setSmallAvailable(false);
         } else {
             linen.setSmallAvailable(true);
         }
 
-        if (middleSizeCellContent.contains(NO)) {
+        if (middleSizeCellContent.isEmpty()) {
             linen.setMiddleAvailable(false);
         } else {
             linen.setMiddleAvailable(true);
         }
 
-        if (euroSizeCellContent.contains(NO)) {
+        if (euroSizeCellContent.isEmpty()) {
             linen.setEuroAvailable(false);
         } else {
             linen.setEuroAvailable(true);
         }
 
-        if (duoSizeCellContent.contains(NO)) {
+        if (duoSizeCellContent.isEmpty()) {
             linen.setDuoAvailable(false);
         } else {
             linen.setDuoAvailable(true);
         }
-
     }
+
 
     @Override
     public LinenCatalogRepository getLinenCatalogRepository() {
