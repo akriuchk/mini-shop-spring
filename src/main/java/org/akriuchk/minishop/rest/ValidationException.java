@@ -1,4 +1,4 @@
-package org.akriuchk.minishop.exception;
+package org.akriuchk.minishop.rest;
 
 public class ValidationException extends RuntimeException{
 

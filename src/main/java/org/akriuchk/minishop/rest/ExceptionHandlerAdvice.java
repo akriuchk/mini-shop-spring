@@ -1,4 +1,4 @@
-package org.akriuchk.minishop.exception;
+package org.akriuchk.minishop.rest;
 
 import org.akriuchk.minishop.config.ApiResponse;
 import org.springframework.core.NestedExceptionUtils;
