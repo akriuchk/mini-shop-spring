@@ -25,6 +25,28 @@ databaseChangeLog:
               - column:
                   name: last_name
                   type: varchar(255)
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: imageurl
+                  type: varchar(255)
+              - column:
+                  name: price
+                  type: varchar(255)
+              - column:
+                  name: description
+                  type: varchar(255)
   - changeSet:
       id: 2
       author: akriuchk

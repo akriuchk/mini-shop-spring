@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/user")
@@ -24,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ApiResponse> newUser(@RequestBody UserProfile profile) {
+    public ResponseEntity<ApiResponse> newUser(@RequestBody @Valid UserProfile profile) {
         userService.addProfile(profile);
         return new ResponseEntity<>(new ApiResponse(true, "Profile has been created."), HttpStatus.CREATED);
     }
