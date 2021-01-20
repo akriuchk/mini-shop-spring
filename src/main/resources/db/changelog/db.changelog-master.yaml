@@ -4,6 +4,32 @@ databaseChangeLog:
       author: akriuchk
       changes:
         - createTable:
+            tableName: user_profile
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: first_name
+                  type: varchar(255)
+              - column:
+                  name: last_name
+                  type: varchar(255)
+  - changeSet:
+      id: 2
+      author: akriuchk
+      changes:
+        - createTable:
             tableName: image
             columns:
               - column:
@@ -67,7 +93,6 @@ databaseChangeLog:
                   type: BIGINT
                   constraints:
                     nullable: false
-
         - createTable:
             tableName: linen_catalog
             columns:
@@ -88,24 +113,3 @@ databaseChangeLog:
               - column:
                   name: display_name
                   type: varchar(255)
-  - changeSet:
-      id: 2
-      author: akriuchk
-      changes:
-        - sql: insert into linen_catalog (catalog_id, name) values (1, 'КПБ БЯЗЬ"ХЛОПКОВЫЙ КРАЙ"')
-        - sql: insert into linen_catalog (catalog_id, name) values (2, 'КПБ САТИН"ХЛОПКОВЫЙ КРАЙ"')
-        - sql: insert into linen_catalog (catalog_id, name) values (3, 'КПБ ПЕРКАЛЬ MIRAROSSI')
-        - sql: insert into linen_catalog (catalog_id, name) values (4, 'Василиса  САТИН')
-        - sql: insert into linen_catalog (catalog_id, name) values (5, 'КПБ ВАСИЛИСА "МОДЕРН", "СОУЛ", "Нежные объятия"')
-        - sql: insert into linen_catalog (catalog_id, name) values (6, 'КПБ ВАСИЛИСА "НЕЖНОСТЬ", "ОНЕГИН", "ЛОФТ", "МИЛЬФЛЕР", "ЦАРЕВНА"')
-        - sql: insert into linen_catalog (catalog_id, name) values (7, 'КПБ ВАСИЛИСА "БЕЛАЯ" ранфорс')
-        - sql: insert into linen_catalog (catalog_id, name) values (8, 'КПБ  Т М  " Василиса ПРЕМИУМ  - роскошный подарок к НГОДУ')
-        - sql: insert into linen_catalog (catalog_id, name) values (10, 'КПБ" Василиса"')
-        - sql: insert into linen_catalog (catalog_id, name) values (11, 'нэкст')
-        - sql: insert into linen_catalog (catalog_id, name) values (12, 'Ботаническая гравюра')
-        - sql: insert into linen_catalog (catalog_id, name) values (13, 'ЛЕТО,МОРЕ')
-        - sql: insert into linen_catalog (catalog_id, name) values (14, 'ДИСНЕЙ')
-        - sql: insert into linen_catalog (catalog_id, name) values (15, 'Твой стиль')
-        - sql: insert into linen_catalog (catalog_id, name) values (16, 'КПБ Василек беби 203/150 бязь наб 40х60')
-        - sql: insert into linen_catalog (catalog_id, name) values (17, 'КПБ Василек юниор  203/150 бязь наб 40х60')
-        - sql: insert into linen_catalog (catalog_id, name) values (19, 'КПБ Клео сатин Юниор')
