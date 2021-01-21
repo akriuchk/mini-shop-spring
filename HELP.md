@@ -28,7 +28,7 @@ The following guides illustrate how to use some features concretely:
 ### Requirements
 
 1. (ok)Start: https://medium.com/javarevisited/lets-develop-an-ecommerce-application-from-scratch-using-java-and-spring-6dfac6ce5a9f
-2. Products + UI: https://medium.com/javascript-in-plain-english/lets-create-vue-js-frontend-for-products-in-our-e-commerce-app-14cc8c3459c8
-3. Products and Catgories: https://medium.com/javascript-in-plain-english/lets-link-product-with-category-for-our-ecommerce-app-28100657a848
-4. Auth: https://medium.com/javarevisited/lets-build-signup-signin-and-role-based-access-in-our-e-commerce-app-f499a4b71f48
+2. (ok)Products + UI: https://medium.com/javascript-in-plain-english/lets-create-vue-js-frontend-for-products-in-our-e-commerce-app-14cc8c3459c8
+3. (ok)Products and Categories: https://medium.com/javascript-in-plain-english/lets-link-product-with-category-for-our-ecommerce-app-28100657a848
+4. (ok)Auth: https://medium.com/javarevisited/lets-build-signup-signin-and-role-based-access-in-our-e-commerce-app-f499a4b71f48
 5. 

@@ -9,9 +9,21 @@ import javax.validation.constraints.NotNull;
 @Table(name = "products")
 @Data
 public class Product {
-    private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id long id;
-    private @NotNull String name;
-    private @NotNull String imageURL;
-    private @NotNull double price;
-    private @NotNull String description;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private long id;
+
+    @NotNull
+    private String name;
+
+    @NotNull
+    private String imageURL;
+
+    @NotNull
+    private double price;
+
+    @NotNull
+    private String description;
+
 }

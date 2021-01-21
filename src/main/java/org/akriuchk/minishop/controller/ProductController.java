@@ -6,6 +6,7 @@ import org.akriuchk.minishop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,12 +23,14 @@ public class ProductController {
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
+    @Secured("ADMIN")
     @PostMapping
     public ResponseEntity<ApiResponse> addProduct(@RequestBody @Valid Product product) {
         productService.addProduct(product);
         return new ResponseEntity<>(new ApiResponse(true, "Product has been added"), HttpStatus.CREATED);
     }
 
+    @Secured("ADMIN")
     @PostMapping("/{productID}")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productID") long productID, @RequestBody @Valid Product product) {
         Product updateProduct = productService.updateProduct(productID, product);
