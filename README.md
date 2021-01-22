@@ -22,3 +22,14 @@ Cross usage of mappers:
 ```
 
 NB: make recheck what intellij automatically imports (toList)
+
+
+## 3. Files
+
+liquidbase columns -> https://docs.liquibase.com/change-types/community/add-column.html
+
+Problem with swagger and multipart upload :(  In postman it should be formdata with key-value
+
+Validate API requires implementation: validation-api + hibernate-validator
+
+Right file upload: FileImportControllerTest.postFile() => requires all headers, content dispositions and so on, and so on
