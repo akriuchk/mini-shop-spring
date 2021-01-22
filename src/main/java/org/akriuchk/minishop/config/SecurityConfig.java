@@ -2,7 +2,6 @@ package org.akriuchk.minishop.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,11 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers(HttpMethod.PUT,"/product/**").hasRole("ADMIN")
                 .and()
 //                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) //todo in future...
                 .csrf().disable()
-//                .and()
+                .headers().frameOptions().disable()
+                .and()
                 .cors()
         ;
     }
@@ -45,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         registry.ignoring()
                 .antMatchers("/docs/**")
                 .antMatchers("/actuator/**")
+                .antMatchers("/console/**")
                 .antMatchers("/v2/api-docs", "/configuration/ui",
                         "/swagger-resources/**", "/configuration/security", "/swagger-ui/**", "/webjars/**");
     }

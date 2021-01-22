@@ -1,4 +1,4 @@
-package org.akriuchk.minishop.config;
+package org.akriuchk.minishop.rest;
 
 import lombok.AllArgsConstructor;
 

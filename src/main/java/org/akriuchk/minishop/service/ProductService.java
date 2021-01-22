@@ -1,15 +1,20 @@
 package org.akriuchk.minishop.service;
 
+import lombok.RequiredArgsConstructor;
+import org.akriuchk.minishop.converter.ProductMapper;
+import org.akriuchk.minishop.dto.ProductDto;
 import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final ProductMapper mapper;
 
     public void addProduct(Product product) {
         productRepository.save(product);
@@ -18,14 +23,15 @@ public class ProductService {
     public Product updateProduct(long productID, Product newProduct) {
         Product oldProduct = productRepository.findById(productID).get();
         oldProduct.setName(newProduct.getName());
-        oldProduct.setImageURL(newProduct.getImageURL());
-        oldProduct.setPrice(newProduct.getPrice());
-        oldProduct.setDescription(newProduct.getDescription());
-
+        oldProduct.setSmallAvailable(newProduct.isSmallAvailable());
+        oldProduct.setMiddleAvailable(newProduct.isMiddleAvailable());
+        oldProduct.setEuroAvailable(newProduct.isEuroAvailable());
+        oldProduct.setDuoAvailable(newProduct.isDuoAvailable());
+        //image
         return productRepository.save(oldProduct);
     }
 
-    public Iterable<Product> listProducts() {
-        return productRepository.findAll();
+    public List<ProductDto> listProducts() {
+        return mapper.convert(productRepository.findAll());
     }
 }

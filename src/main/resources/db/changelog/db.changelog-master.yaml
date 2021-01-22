@@ -26,7 +26,7 @@ databaseChangeLog:
                   name: last_name
                   type: varchar(255)
         - createTable:
-            tableName: products
+            tableName: products_old
             columns:
               - column:
                   name: id
@@ -76,7 +76,7 @@ databaseChangeLog:
                   name: linen_id
                   type: BIGINT
         - createTable:
-            tableName: linen
+            tableName: products
             columns:
               - column:
                   name: id
@@ -113,8 +113,8 @@ databaseChangeLog:
               - column:
                   name: catalog_id
                   type: BIGINT
-                  constraints:
-                    nullable: false
+#                  constraints:
+#                    nullable: false
         - createTable:
             tableName: linen_catalog
             columns:

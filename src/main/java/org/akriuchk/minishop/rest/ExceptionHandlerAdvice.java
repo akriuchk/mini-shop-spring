@@ -1,6 +1,5 @@
 package org.akriuchk.minishop.rest;
 
-import org.akriuchk.minishop.config.ApiResponse;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

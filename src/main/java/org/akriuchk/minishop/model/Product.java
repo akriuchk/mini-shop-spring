@@ -1,29 +1,42 @@
 package org.akriuchk.minishop.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private long id;
 
-    @NotNull
     private String name;
+    private boolean isSmallAvailable;
+    private boolean isMiddleAvailable;
+    private boolean isEuroAvailable;
+    private boolean isDuoAvailable;
 
-    @NotNull
-    private String imageURL;
 
-    @NotNull
-    private double price;
+//    @OneToMany(
+//            mappedBy = "linen",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.EAGER
+//    )
+//    @EqualsAndHashCode.Exclude
+//    private Set<Long> images;
 
-    @NotNull
-    private String description;
-
+//    @ManyToOne
+//    @JoinColumn(name = "catalog_id", nullable = false)
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    @JsonIgnore
+//    private LinenCatalog linenCatalog;
 }

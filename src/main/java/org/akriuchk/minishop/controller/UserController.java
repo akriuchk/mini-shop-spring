@@ -1,8 +1,8 @@
 package org.akriuchk.minishop.controller;
 
 
-import org.akriuchk.minishop.config.ApiResponse;
 import org.akriuchk.minishop.model.UserProfile;
+import org.akriuchk.minishop.rest.ApiResponse;
 import org.akriuchk.minishop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
