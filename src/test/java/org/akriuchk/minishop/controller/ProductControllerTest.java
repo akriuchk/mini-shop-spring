@@ -34,7 +34,7 @@ public class ProductControllerTest {
     @Test
     public void testGetProducts() {
         List<ProductDto> result = toList(template.withBasicAuth("admin", "admin")
-                .getForEntity("/product", ProductDto[].class));
+                .getForEntity("/products", ProductDto[].class));
 
         ProductDto productDto = result.get(1);
         assertThat(result).hasSize(4);
@@ -43,20 +43,23 @@ public class ProductControllerTest {
 
     @Test
     public void testAddProduct() {
-        Product dto = new Product();
+        ProductDto dto = new ProductDto();
         dto.setName("AAA");
         dto.setSmallAvailable(true);
         dto.setMiddleAvailable(false);
         dto.setEuroAvailable(false);
         dto.setDuoAvailable(true);
+        dto.setLinenCatalog("test_cat");
 
         ResponseEntity<ApiResponse> apiResponseResponseEntity = template.withBasicAuth("admin", "admin")
-                .postForEntity("/product", dto, ApiResponse.class);
+                .postForEntity("/products", dto, ApiResponse.class);
         assertThat(apiResponseResponseEntity.getStatusCode()).isEqualByComparingTo(HttpStatus.CREATED);
 
 
         Optional<ProductDto> any = toList(template.withBasicAuth("admin", "admin")
-                .getForEntity("/product", ProductDto[].class)).stream().filter(p -> p.getName().equals("AAA")).findAny();
+                .getForEntity("/products", ProductDto[].class))
+                .stream().filter(p -> p.getName().equals("AAA"))
+                .findAny();
 
         assertThat(any).isPresent();
         assertThat(any.get().getId()).isNotNegative().isNotNull();
@@ -74,7 +77,7 @@ public class ProductControllerTest {
         dto.setDuoAvailable(true);
 
         ResponseEntity<ApiResponse> apiResponseResponseEntity = template.withBasicAuth("admin", "admin")
-                .postForEntity("/product/1", dto, ApiResponse.class);
+                .postForEntity("/products/1", dto, ApiResponse.class);
         assertThat(apiResponseResponseEntity.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
     }
 }

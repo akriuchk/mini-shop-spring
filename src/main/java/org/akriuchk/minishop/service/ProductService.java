@@ -3,6 +3,7 @@ package org.akriuchk.minishop.service;
 import lombok.RequiredArgsConstructor;
 import org.akriuchk.minishop.converter.ProductMapper;
 import org.akriuchk.minishop.dto.ProductDto;
+import org.akriuchk.minishop.model.Category;
 import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,14 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
     private final ProductMapper mapper;
 
-    public void addProduct(Product product) {
-        productRepository.save(product);
+    public void addProduct(ProductDto product) {
+        Product pojo = mapper.toPojo(product);
+        Category category = categoryService.findByName(product.getLinenCatalog());
+        pojo.setLinenCatalog(category);
+        productRepository.save(pojo);
     }
 
     public Product updateProduct(long productID, Product newProduct) {

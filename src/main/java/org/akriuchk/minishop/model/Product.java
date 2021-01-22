@@ -1,6 +1,10 @@
 package org.akriuchk.minishop.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,8 +13,6 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class Product {
 
     @Id
@@ -33,10 +35,9 @@ public class Product {
 //    @EqualsAndHashCode.Exclude
 //    private Set<Long> images;
 
-//    @ManyToOne
-//    @JoinColumn(name = "catalog_id", nullable = false)
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @JsonIgnore
-//    private LinenCatalog linenCatalog;
+    @ManyToOne
+    @JoinColumn(name = "catalog_id", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private Category linenCatalog;
 }

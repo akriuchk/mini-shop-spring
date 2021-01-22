@@ -1,7 +1,9 @@
 package org.akriuchk.minishop;
 
 import lombok.extern.slf4j.Slf4j;
+import org.akriuchk.minishop.model.Category;
 import org.akriuchk.minishop.model.Product;
+import org.akriuchk.minishop.repository.CategoriesRepository;
 import org.akriuchk.minishop.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,14 +22,20 @@ public class MiniShopApplication {
     }
 
     @Bean
-    public CommandLineRunner demoData(ProductRepository repo) {
+    public CommandLineRunner demoData(ProductRepository repo, CategoriesRepository catRepo) {
         AtomicLong id = new AtomicLong(0);
+        Category category = new Category();
+        category.setName("test_cat");
+        category.setDisplayName("Display name");
+
+        catRepo.save(category);
+
         return args -> {
             repo.saveAll(Arrays.asList(
-                    new Product(id.incrementAndGet(), "a", true, false, true, false),
-                    new Product(id.incrementAndGet(), "b", true, false, true, false),
-                    new Product(id.incrementAndGet(), "c", true, false, true, false),
-                    new Product(id.incrementAndGet(), "d", true, false, true, false)
+                    new Product(id.incrementAndGet(), "a", true, false, true, false, category),
+                    new Product(id.incrementAndGet(), "b", true, false, true, false, category),
+                    new Product(id.incrementAndGet(), "c", true, false, true, false, category),
+                    new Product(id.incrementAndGet(), "d", true, false, true, false, category)
             ));
         };
     }

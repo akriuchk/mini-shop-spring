@@ -113,10 +113,10 @@ databaseChangeLog:
               - column:
                   name: catalog_id
                   type: BIGINT
-#                  constraints:
-#                    nullable: false
+                  constraints:
+                    nullable: false
         - createTable:
-            tableName: linen_catalog
+            tableName: categories
             columns:
               - column:
                   name: catalog_id

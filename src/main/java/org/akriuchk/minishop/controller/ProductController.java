@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -27,7 +27,7 @@ public class ProductController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping
-    public ResponseEntity<ApiResponse> addProduct(@RequestBody @Valid Product product) {
+    public ResponseEntity<ApiResponse> addProduct(@RequestBody ProductDto product) {
         productService.addProduct(product);
         return new ResponseEntity<>(new ApiResponse(true, "Product has been added"), HttpStatus.CREATED);
     }
