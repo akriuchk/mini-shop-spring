@@ -12,4 +12,5 @@ public @interface ValidExtension {
     String message() default "Invalid extension!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
+    String[] value() default "";
 }

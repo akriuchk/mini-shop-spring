@@ -22,7 +22,7 @@ public class Image {
     private long id;
 
     @NotNull
-    @ValidExtension()
+    @ValidExtension(value = {".jpg", ".png", ".jpeg"})
     private String filename;
 
     @Basic

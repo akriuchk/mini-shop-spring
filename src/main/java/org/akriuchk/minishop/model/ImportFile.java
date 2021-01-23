@@ -1,14 +1,12 @@
 package org.akriuchk.minishop.model;
 
 import lombok.Data;
+import org.akriuchk.minishop.validation.ValidExtension;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
-
-import static javax.validation.constraints.Pattern.Flag.CASE_INSENSITIVE;
 
 
 @Entity
@@ -23,7 +21,7 @@ public class ImportFile {
     private long id;
 
     @NotNull
-    @Pattern(regexp = ".*.xlsx", flags = CASE_INSENSITIVE)
+    @ValidExtension(value = {".xlsx"})
     private String filename;
 
     @Basic

@@ -5,7 +5,6 @@ import org.akriuchk.minishop.converter.FileImportMapper;
 import org.akriuchk.minishop.dto.ImportFileDto;
 import org.akriuchk.minishop.model.ImportFile;
 import org.akriuchk.minishop.repository.FilesRepository;
-import org.akriuchk.minishop.validation.ValidExtension;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,10 +20,8 @@ public class FileService {
     private final FilesRepository repository;
     private final FileImportMapper mapper;
 
-    @ValidExtension
     public ImportFileDto importNew(MultipartFile file) {
         ImportFile importFile = new ImportFile();
-        System.out.println("FILEFILEFILE:" + file.getOriginalFilename());
         importFile.setFilename(file.getOriginalFilename());
 
         try {
