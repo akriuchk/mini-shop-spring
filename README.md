@@ -33,3 +33,6 @@ Problem with swagger and multipart upload :(  In postman it should be formdata w
 Validate API requires implementation: validation-api + hibernate-validator
 
 Right file upload: FileImportControllerTest.postFile() => requires all headers, content dispositions and so on, and so on
+
+## 4. Images
+

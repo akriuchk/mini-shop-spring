@@ -7,12 +7,13 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = ImageDtoMapper.class)
 public interface ProductMapper {
     @Mapping(target = "linenCatalog", source = "product.linenCatalog.name")
     ProductDto toDto(Product product);
 
     @Mapping(target = "linenCatalog", ignore = true)
+    @Mapping(target = "images", ignore = true)
     Product toPojo(ProductDto dto);
 
     List<ProductDto> convert(List<Product> source);

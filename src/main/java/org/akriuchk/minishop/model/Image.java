@@ -1,21 +1,20 @@
 package org.akriuchk.minishop.model;
 
 import lombok.Data;
+import lombok.ToString;
+import org.akriuchk.minishop.validation.ValidExtension;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
-import static javax.validation.constraints.Pattern.Flag.CASE_INSENSITIVE;
-
-
 @Entity
-@Table(name = "import_files")
+@Table(name = "images")
 @Data
 @Valid
-public class ImportFile {
+public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,28 +22,24 @@ public class ImportFile {
     private long id;
 
     @NotNull
-    @Pattern(regexp = ".*.xlsx", flags = CASE_INSENSITIVE)
+    @ValidExtension()
     private String filename;
 
     @Basic
+    @Size(min = 1)
     private byte[] content;
+    private boolean isAssigned = false; //eq to prod.isNull
 
-    @Enumerated(EnumType.STRING)
-    private IMPORT_STATUS status = IMPORT_STATUS.ACCEPTED;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    @ToString.Exclude
+    private Product product;
 
     private Date createdAt;
 
     @PrePersist
     void createdAt() {
         this.createdAt = new Date();
-    }
-
-    public enum IMPORT_STATUS {
-        ACCEPTED,
-        IN_DB,
-        IN_PROGRESS,
-        ERROR,
-        FINISHED
     }
 
 }

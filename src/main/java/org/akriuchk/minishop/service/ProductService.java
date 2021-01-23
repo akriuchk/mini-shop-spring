@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.akriuchk.minishop.converter.ProductMapper;
 import org.akriuchk.minishop.dto.ProductDto;
 import org.akriuchk.minishop.model.Category;
+import org.akriuchk.minishop.model.Image;
 import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class ProductService {
         productRepository.save(pojo);
     }
 
+    public List<ProductDto> listProducts() {
+        return mapper.convert(productRepository.findAll());
+    }
+
+    //todo change to product dto
     public Product updateProduct(long productID, Product newProduct) {
         Product oldProduct = productRepository.findById(productID).get();
         oldProduct.setName(newProduct.getName());
@@ -32,11 +38,19 @@ public class ProductService {
         oldProduct.setMiddleAvailable(newProduct.isMiddleAvailable());
         oldProduct.setEuroAvailable(newProduct.isEuroAvailable());
         oldProduct.setDuoAvailable(newProduct.isDuoAvailable());
-        //image
         return productRepository.save(oldProduct);
     }
 
-    public List<ProductDto> listProducts() {
-        return mapper.convert(productRepository.findAll());
+    public void addImage(String productName, Image image) {
+        Product product = productRepository.findByName(productName);
+        product.getImages().add(image);
+        image.setProduct(product);
+    }
+
+    public void replaceImage(Product product, Image existingImage, Image newImg) {
+        product.getImages().remove(existingImage);
+        product.getImages().add(newImg);
+        newImg.setProduct(product);
+        existingImage.setProduct(null);
     }
 }

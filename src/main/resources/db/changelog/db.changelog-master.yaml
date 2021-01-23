@@ -52,7 +52,7 @@ databaseChangeLog:
       author: akriuchk
       changes:
         - createTable:
-            tableName: image
+            tableName: images
             columns:
               - column:
                   name: id
@@ -62,19 +62,22 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: image_content
+                  name: content
                   type: BYTEA
               - column:
-                  name: name
+                  name: filename
                   type: varchar(255)
               - column:
-                  name: is_linked
+                  name: is_assigned
                   type: boolean
                   constraints:
                     nullable: false
               - column:
-                  name: linen_id
+                  name: product_id
                   type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
         - createTable:
             tableName: products
             columns:

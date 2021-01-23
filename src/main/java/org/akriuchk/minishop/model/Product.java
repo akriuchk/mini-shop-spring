@@ -1,12 +1,9 @@
 package org.akriuchk.minishop.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -25,19 +22,18 @@ public class Product {
     private boolean isEuroAvailable;
     private boolean isDuoAvailable;
 
-
-//    @OneToMany(
-//            mappedBy = "linen",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true,
-//            fetch = FetchType.EAGER
-//    )
-//    @EqualsAndHashCode.Exclude
-//    private Set<Long> images;
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = false,
+            fetch = FetchType.LAZY
+    )
+    @EqualsAndHashCode.Exclude
+    private List<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "catalog_id", nullable = false)
     @EqualsAndHashCode.Exclude
-    @JsonIgnore
+    @ToString.Exclude
     private Category linenCatalog;
 }

@@ -3,7 +3,7 @@ package org.akriuchk.minishop.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class ProductDto {
@@ -15,7 +15,7 @@ public class ProductDto {
     private boolean isMiddleAvailable;
     private boolean isEuroAvailable;
     private boolean isDuoAvailable;
-    private Set<Long> images;
+    private List<ImageDto> images;
 
     @NotEmpty
     private String linenCatalog;
