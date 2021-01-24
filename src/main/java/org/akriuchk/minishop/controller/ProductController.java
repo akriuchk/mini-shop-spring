@@ -25,6 +25,11 @@ public class ProductController {
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") long productID) {
+        return new ResponseEntity<>(productService.findProduct(productID), HttpStatus.OK);
+    }
+
     @Secured("ROLE_ADMIN")
     @PostMapping
     public ResponseEntity<ApiResponse> addProduct(@RequestBody ProductDto product) {

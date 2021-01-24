@@ -3,6 +3,7 @@ package org.akriuchk.minishop.controller;
 import lombok.RequiredArgsConstructor;
 import org.akriuchk.minishop.dto.ImportFileDto;
 import org.akriuchk.minishop.model.ImportFile;
+import org.akriuchk.minishop.model.SupportedCategories;
 import org.akriuchk.minishop.service.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class FileImportController {
     public final FileService fileService;
 
     @PostMapping
-    public ResponseEntity<ImportFileDto> importFile(@RequestParam("file") MultipartFile file) {
-        ImportFileDto importResult = fileService.importNew(file);
+    public ResponseEntity<ImportFileDto> importFile(@RequestParam("file") MultipartFile file, @RequestParam("category")  SupportedCategories category) {
+        ImportFileDto importResult = fileService.importNew(file, category);
         return new ResponseEntity<>(importResult, HttpStatus.CREATED);
     }
 

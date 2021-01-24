@@ -12,5 +12,5 @@ public class CategoryDto {
     private String name;
     @NotEmpty
     private String displayName;
-    private Set<ProductDto> linens;
+    private Set<ProductDto> products;
 }

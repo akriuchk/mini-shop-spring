@@ -14,10 +14,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.akriuchk.minishop.TestUtils.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -25,10 +25,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CategoryControllerTest extends TestCase {
-
-    public static <T> List<T> toList(ResponseEntity<T[]> array) {
-        return Arrays.asList(array.getBody());
-    }
 
     @Autowired
     private TestRestTemplate template;
@@ -38,8 +34,8 @@ public class CategoryControllerTest extends TestCase {
         List<CategoryDto> result = toList(template.withBasicAuth("admin", "admin")
                 .getForEntity("/categories", CategoryDto[].class));
 
-        CategoryDto productDto = result.get(0);
-        assertThat(productDto.getLinens()).hasSize(4);
+        CategoryDto productDto = result.stream().filter(categoryDto -> categoryDto.getName().equals("test_cat")).findFirst().get();
+        assertThat(productDto.getProducts()).hasSize(4);
         assertThat(productDto.getName()).isNotNull().isNotBlank();
     }
 
@@ -57,7 +53,7 @@ public class CategoryControllerTest extends TestCase {
         Optional<CategoryDto> any = getCategory(dto.getName());
 
         assertThat(any).isPresent();
-        assertThat(any.get().getLinens()).isEmpty();
+        assertThat(any.get().getProducts()).isEmpty();
     }
 
     private Optional<CategoryDto> getCategory(String name) {

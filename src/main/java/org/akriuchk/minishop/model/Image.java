@@ -2,6 +2,7 @@ package org.akriuchk.minishop.model;
 
 import lombok.Data;
 import lombok.ToString;
+import org.akriuchk.minishop.dto.ImageDto;
 import org.akriuchk.minishop.validation.ValidExtension;
 
 import javax.persistence.*;
@@ -10,6 +11,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+/**
+ * Model for storing image in DB (yes, I know)
+ * for dto see
+ * @see ImageDto
+ */
 @Entity
 @Table(name = "images")
 @Data

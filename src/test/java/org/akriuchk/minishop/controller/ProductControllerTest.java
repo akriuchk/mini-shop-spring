@@ -49,7 +49,7 @@ public class ProductControllerTest {
         dto.setMiddleAvailable(false);
         dto.setEuroAvailable(false);
         dto.setDuoAvailable(true);
-        dto.setLinenCatalog("test_cat");
+        dto.setCategory("test_cat");
 
         ResponseEntity<ApiResponse> apiResponseResponseEntity = template.withBasicAuth("admin", "admin")
                 .postForEntity("/products", dto, ApiResponse.class);

@@ -18,5 +18,5 @@ public class ProductDto {
     private List<ImageDto> images;
 
     @NotEmpty
-    private String linenCatalog;
+    private String category;
 }

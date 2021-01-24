@@ -13,11 +13,11 @@ public interface CategoryMapper {
 
     CategoryDto toDto(Category source);
 
-    @Mapping(target = "linens", ignore = true)
+    @Mapping(target = "products", ignore = true)
     Category toPojo(CategoryDto source);
 
     List<CategoryDto> convert(List<Category> source);
 
-    @Mapping(target = "linens", ignore = true)
+    @Mapping(target = "products", ignore = true)
     Category update(CategoryDto dto, @MappingTarget Category category);
 }

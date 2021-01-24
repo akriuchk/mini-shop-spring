@@ -15,8 +15,7 @@ import java.util.function.Consumer;
 public class TestUtils {
 
     public static <T> ResponseEntity<T> postFile(TestRestTemplate template, String filename, String url, Class<T> responseClass) {
-        return postFile(template, filename, url, responseClass, x -> {
-        });
+        return postFile(template, filename, url, responseClass, x -> {});
     }
 
     @SneakyThrows

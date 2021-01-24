@@ -9,6 +9,7 @@ import org.akriuchk.minishop.repository.CategoriesRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class CategoryService {
         return mapper.toDto(category);
     }
 
-    public Category findByName(String name) {
-        return repository.findByName(name).get();
+    public Optional<Category> findByName(String name) {
+        return repository.findByName(name);
     }
 }

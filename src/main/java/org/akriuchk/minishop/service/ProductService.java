@@ -10,6 +10,7 @@ import org.akriuchk.minishop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +22,17 @@ public class ProductService {
 
     public void addProduct(ProductDto product) {
         Product pojo = mapper.toPojo(product);
-        Category category = categoryService.findByName(product.getLinenCatalog());
-        pojo.setLinenCatalog(category);
+        Category category = categoryService.findByName(product.getCategory()).orElseThrow(() -> new RuntimeException(product.getCategory() + " not found"));
+        pojo.setCategory(category);
         productRepository.save(pojo);
+    }
+
+    public Optional<Product> findByName(String name) {
+        return productRepository.findByName(name);
+    }
+
+    public ProductDto findProduct(long productID) {
+        return mapper.toDto(productRepository.findById(productID).get());
     }
 
     public List<ProductDto> listProducts() {
@@ -42,7 +51,7 @@ public class ProductService {
     }
 
     public void addImage(String productName, Image image) {
-        Product product = productRepository.findByName(productName);
+        Product product = productRepository.findByName(productName).orElseThrow(() -> new RuntimeException(productName + " not found"));
         product.getImages().add(image);
         image.setProduct(product);
     }
