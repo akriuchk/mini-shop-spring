@@ -35,5 +35,5 @@ public class Product {
     @JoinColumn(name = "catalog_id", nullable = false)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Category linenCatalog;
+    private Category category;
 }

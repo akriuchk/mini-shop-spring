@@ -36,3 +36,4 @@ Right file upload: FileImportControllerTest.postFile() => requires all headers, 
 
 ## 4. Images
 
+## 5. Default category excel parser

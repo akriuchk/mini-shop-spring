@@ -25,11 +25,11 @@ public class Category {
     private String displayName;
 
     @OneToMany(
-            mappedBy = "linenCatalog",
+            mappedBy = "category",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.EAGER
     )
     @EqualsAndHashCode.Exclude
-    private Set<Product> linens = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 }

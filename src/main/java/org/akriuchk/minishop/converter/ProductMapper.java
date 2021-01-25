@@ -9,10 +9,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = ImageDtoMapper.class)
 public interface ProductMapper {
-    @Mapping(target = "linenCatalog", source = "product.linenCatalog.name")
+    @Mapping(target = "category", source = "product.category.name")
     ProductDto toDto(Product product);
 
-    @Mapping(target = "linenCatalog", ignore = true)
+    @Mapping(target = "category", ignore = true)
     @Mapping(target = "images", ignore = true)
     Product toPojo(ProductDto dto);
 

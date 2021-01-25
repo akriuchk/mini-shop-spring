@@ -1,5 +1,6 @@
 package org.akriuchk.minishop;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.ClassPathResource;
@@ -7,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +17,7 @@ import java.util.function.Consumer;
 public class TestUtils {
 
     public static <T> ResponseEntity<T> postFile(TestRestTemplate template, String filename, String url, Class<T> responseClass) {
-        return postFile(template, filename, url, responseClass, x -> {
-        });
+        return postFile(template, filename, url, responseClass, x -> {});
     }
 
     @SneakyThrows
@@ -52,5 +53,11 @@ public class TestUtils {
 
     public static <T> List<T> toList(ResponseEntity<T[]> array) {
         return Arrays.asList(array.getBody());
+    }
+
+    @SneakyThrows
+    public static <T> T mapFromJson(File f, Class<T> clazz) {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(f, clazz);
     }
 }

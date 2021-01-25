@@ -14,7 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import static org.akriuchk.minishop.TestUtils.postFile;
@@ -35,21 +35,21 @@ public class FileImportControllerTest {
     private JdbcTemplate jdbcTemplate;
 
     @Test
-    public void importFile() throws IOException {
+    public void importFile() {
         String filename = "KPB_CHEBOKS_SHORT_3_PAGES.xlsx";
 
-        ResponseEntity<ImportFile> response = postFile(template, filename, "/files", ImportFile.class);
+        ResponseEntity<ImportFile> response = postFile(template, filename, "/files", ImportFile.class, body -> body.put("category", Collections.singletonList("DEFAULT")));
         assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.CREATED);
         assertThat(response.getBody().getFilename()).isEqualTo(filename);
-        assertThat(response.getBody().getStatus()).isEqualTo(ImportFile.IMPORT_STATUS.IN_DB);
+        assertThat(response.getBody().getStatus()).isEqualTo(ImportFile.IMPORT_STATUS.FINISHED);
     }
 
 
     @Test
-    public void search() throws IOException {
+    public void search() {
         String filename = "KPB_CHEBOKS_SHORT_3_PAGES.xlsx";
 
-        postFile(template, filename, "/files", ImportFile.class);
+        postFile(template, filename, "/files", ImportFile.class, body -> body.put("category", Collections.singletonList("DEFAULT")));
 
         jdbcTemplate.execute(
                 "UPDATE import_files " +
@@ -64,9 +64,15 @@ public class FileImportControllerTest {
                 "UPDATE import_files " +
                         "SET status='IN_DB'");
 
-        postFile(template, filename, "/files", ImportFile.class);
-        postFile(template, filename, "/files", ImportFile.class);
-        postFile(template, filename, "/files", ImportFile.class);
+        postFile(template, filename, "/files", ImportFile.class, body -> {
+            body.put("category", Collections.singletonList("DEFAULT"));
+        });
+        postFile(template, filename, "/files", ImportFile.class, body -> {
+            body.put("category", Collections.singletonList("DEFAULT"));
+        });
+        postFile(template, filename, "/files", ImportFile.class, body -> {
+            body.put("category", Collections.singletonList("DEFAULT"));
+        });
 
         any = toList(template.withBasicAuth("admin", "admin")
                 .getForEntity("/files?status={value}", ImportFileDto[].class, ImportFile.IMPORT_STATUS.IN_DB));
@@ -76,11 +82,17 @@ public class FileImportControllerTest {
     }
 
     @Test
-    public void deleteCompleted() throws IOException {
+    public void deleteCompleted()  {
         String filename = "KPB_CHEBOKS_SHORT_3_PAGES.xlsx";
-        postFile(template, filename, "/files", ImportFile.class);
-        postFile(template, filename, "/files", ImportFile.class);
-        postFile(template, filename, "/files", ImportFile.class);
+        postFile(template, filename, "/files", ImportFile.class, body -> {
+            body.put("category", Collections.singletonList("DEFAULT"));
+        });
+        postFile(template, filename, "/files", ImportFile.class, body -> {
+            body.put("category", Collections.singletonList("DEFAULT"));
+        });
+        postFile(template, filename, "/files", ImportFile.class, body -> {
+            body.put("category", Collections.singletonList("DEFAULT"));
+        });
 
         jdbcTemplate.execute(
                 "UPDATE import_files " +
@@ -90,12 +102,12 @@ public class FileImportControllerTest {
 
         jdbcTemplate.execute(
                 "UPDATE import_files " +
-                        "SET status='FINISHED'" +
+                        "SET status='IN_DB'" +
                         "WHERE id=2 "
         );
 
         List<ImportFileDto> importFileDtos = toList(template.withBasicAuth("admin", "admin")
-                .getForEntity("/files?status={value}", ImportFileDto[].class, ImportFile.IMPORT_STATUS.ACCEPTED));
+                .getForEntity("/files?status={value}", ImportFileDto[].class, ImportFile.IMPORT_STATUS.FINISHED));
 
 
         assertThat(importFileDtos).hasSize(1);

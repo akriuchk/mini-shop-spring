@@ -1,0 +1,95 @@
+{
+  "id": 1,
+  "filename": "KPB_CHEBOKS_SHORT_3_PAGES.xlsx",
+  "status": "FINISHED",
+  "createdAt": "2021-01-25T03:50:59",
+  "result": [
+    {
+      "category": {
+        "name": "КПБ ПЕРКАЛЬ MIRAROSSI",
+        "displayName": "КПБ ПЕРКАЛЬ MIRAROSSI",
+        "products": null
+      },
+      "updates": [
+        {
+          "id": 0,
+          "name": "Veronika",
+          "category": "КПБ ПЕРКАЛЬ MIRAROSSI",
+          "isNew": true,
+          "smallAvailable": true,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": false
+        },
+        {
+          "id": 0,
+          "name": "Vittoria\\2",
+          "category": "КПБ ПЕРКАЛЬ MIRAROSSI",
+          "isNew": true,
+          "smallAvailable": false,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": false
+        }
+      ]
+    },
+    {
+      "category": {
+        "name": "КПБ САТИН\"ХЛОПКОВЫЙ КРАЙ\"",
+        "displayName": "КПБ САТИН \"ХЛОПКОВЫЙ КРАЙ\"",
+        "products": null
+      },
+      "updates": [
+        {
+          "id": 0,
+          "name": "Анабель",
+          "category": "КПБ САТИН\"ХЛОПКОВЫЙ КРАЙ\"",
+          "isNew": true,
+          "smallAvailable": false,
+          "middleAvailable": false,
+          "euroAvailable": true,
+          "duoAvailable": false
+        },
+        {
+          "id": 0,
+          "name": "Амазония",
+          "category": "КПБ САТИН\"ХЛОПКОВЫЙ КРАЙ\"",
+          "isNew": true,
+          "smallAvailable": false,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": true
+        }
+      ]
+    },
+    {
+      "category": {
+        "name": "КПБ БЯЗЬ\"ХЛОПКОВЫЙ КРАЙ\"",
+        "displayName": "КПБ БЯЗЬ \"ХЛОПКОВЫЙ КРАЙ\"",
+        "products": null
+      },
+      "updates": [
+        {
+          "id": 0,
+          "name": "Андерсон грей",
+          "category": "КПБ БЯЗЬ\"ХЛОПКОВЫЙ КРАЙ\"",
+          "isNew": true,
+          "smallAvailable": false,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": false
+        },
+        {
+          "id": 0,
+          "name": "Анкара бургунди",
+          "category": "КПБ БЯЗЬ\"ХЛОПКОВЫЙ КРАЙ\"",
+          "isNew": true,
+          "smallAvailable": true,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": false
+        }
+      ]
+    }
+  ]
+}
