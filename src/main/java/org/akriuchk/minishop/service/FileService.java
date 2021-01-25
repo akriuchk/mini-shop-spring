@@ -3,6 +3,7 @@ package org.akriuchk.minishop.service;
 import lombok.RequiredArgsConstructor;
 import org.akriuchk.minishop.converter.FileImportMapper;
 import org.akriuchk.minishop.dto.ImportFileDto;
+import org.akriuchk.minishop.dto.importinfo.ImportResultDto;
 import org.akriuchk.minishop.model.ImportFile;
 import org.akriuchk.minishop.model.SupportedCategories;
 import org.akriuchk.minishop.repository.FilesRepository;
@@ -43,8 +44,11 @@ public class FileService {
         importFile.setContent(file.getBytes());
         importFile.setStatus(IN_DB);
         repository.save(importFile);
-        catalogParserManager.importNewCatalog(file, category);
-        return mapper.toDto(importFile);
+
+        List<ImportResultDto> catalofImportResult = catalogParserManager.importNewCatalog(file, category);
+        ImportFileDto importFileResult = mapper.toDto(importFile);
+        importFileResult.setResult(catalofImportResult);
+        return importFileResult;
     }
 
     public List<ImportFileDto> search(ImportFile.IMPORT_STATUS status) {

@@ -43,6 +43,11 @@ public class MiniShopApplication {
             rai.setDisplayName("КПБ БЯЗЬ \"ХЛОПКОВЫЙ КРАЙ\"");
             catRepo.save(rai);
 
+            Category satin = new Category();
+            satin.setName("КПБ САТИН\"ХЛОПКОВЫЙ КРАЙ\"");
+            satin.setDisplayName("КПБ САТИН \"ХЛОПКОВЫЙ КРАЙ\"");
+            catRepo.save(satin);
+
             Category perkal = new Category();
             perkal.setName("КПБ ПЕРКАЛЬ MIRAROSSI");
             perkal.setDisplayName("КПБ ПЕРКАЛЬ MIRAROSSI");

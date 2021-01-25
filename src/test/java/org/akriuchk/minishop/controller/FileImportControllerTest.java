@@ -14,7 +14,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class FileImportControllerTest {
 
 
     @Test
-    public void search() throws IOException {
+    public void search() {
         String filename = "KPB_CHEBOKS_SHORT_3_PAGES.xlsx";
 
         postFile(template, filename, "/files", ImportFile.class, body -> body.put("category", Collections.singletonList("DEFAULT")));
@@ -83,7 +82,7 @@ public class FileImportControllerTest {
     }
 
     @Test
-    public void deleteCompleted() throws IOException {
+    public void deleteCompleted()  {
         String filename = "KPB_CHEBOKS_SHORT_3_PAGES.xlsx";
         postFile(template, filename, "/files", ImportFile.class, body -> {
             body.put("category", Collections.singletonList("DEFAULT"));

@@ -21,7 +21,7 @@ public class FileImportController {
     public final FileService fileService;
 
     @PostMapping
-    public ResponseEntity<ImportFileDto> importFile(@RequestParam("file") MultipartFile file, @RequestParam("category")  SupportedCategories category) {
+    public ResponseEntity<ImportFileDto> importFile(@RequestParam("file") MultipartFile file, @RequestParam("category") SupportedCategories category) {
         ImportFileDto importResult = fileService.importNew(file, category);
         return new ResponseEntity<>(importResult, HttpStatus.CREATED);
     }
