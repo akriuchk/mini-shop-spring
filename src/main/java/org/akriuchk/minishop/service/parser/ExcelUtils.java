@@ -15,7 +15,7 @@ public class ExcelUtils {
                 return i;
             }
         }
-        String error = String.format("First cell for row %s/%s not found", row.getSheet().getSheetName(), row.getRowNum());
+        String error = String.format("First cell for row '%s/%s' not found", row.getSheet().getSheetName(), row.getRowNum());
         throw new RuntimeException(error);
     }
 
@@ -33,6 +33,16 @@ public class ExcelUtils {
             }
         }
         return false;
+    }
+
+    public static boolean isRowEmpty(Row row) {
+        for (int i = 0; i < row.getLastCellNum(); i++) {
+            String stringValue = getStringValue(row, i);
+            if (!stringValue.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

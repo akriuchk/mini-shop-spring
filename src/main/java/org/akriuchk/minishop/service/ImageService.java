@@ -19,7 +19,6 @@ public class ImageService {
     private final ProductService productService;
     private final ImageDtoMapper mapper;
 
-
     /**
      * Import new image, if product name is present, add there
      *

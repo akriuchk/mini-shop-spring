@@ -37,4 +37,8 @@ public class CategoryService {
     public Optional<Category> findByName(String name) {
         return repository.findByName(name);
     }
+
+    public Category getByName(String name) {
+        return repository.getByName(name);
+    }
 }

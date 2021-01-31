@@ -47,9 +47,7 @@ public class CatalogParserManager {
         if (catalog == SupportedCategories.DEFAULT) {
             parser = new DefaultParser(categoryService, productService, categoryMapper, productMapper);
         } else if (catalog == SupportedCategories.VASILISA_BYAZ) {
-//            parser = new VasilisaBjazParser(categoryService, productService);
-
-            throw new ValidationException("Parser for catalog is not supported: " + catalog);
+            parser = new VasilisaBjazParser(categoryService, productService, categoryMapper, productMapper);
         } else if (catalog == SupportedCategories.DISNEY) {
 //            parser = new DisneyParser(categoryService, productService);
 

@@ -38,6 +38,11 @@ public class MiniShopApplication {
             vasi_satin.setDisplayName("Василиса САТИН");
             catRepo.save(vasi_satin);
 
+            Category vasi_bjaz = new Category();
+            vasi_satin.setName("КПБ\" Василиса\"");
+            vasi_satin.setDisplayName("КПБ \"Василиса\"");
+            catRepo.save(vasi_bjaz);
+
             Category rai = new Category();
             rai.setName("КПБ БЯЗЬ\"ХЛОПКОВЫЙ КРАЙ\"");
             rai.setDisplayName("КПБ БЯЗЬ \"ХЛОПКОВЫЙ КРАЙ\"");
