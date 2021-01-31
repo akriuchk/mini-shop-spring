@@ -1,10 +1,11 @@
 package org.akriuchk.minishop.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.akriuchk.minishop.dto.ProductDto;
 import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.rest.ApiResponse;
+import org.akriuchk.minishop.service.ImageProductMatcherService;
 import org.akriuchk.minishop.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -15,13 +16,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+    private final ImageProductMatcherService imageProductMatcherService;
 
-    @GetMapping
-    public ResponseEntity<List<ProductDto>> getProducts() {
-        List<ProductDto> body = productService.listProducts();
+    @GetMapping("/suggestedImages")
+    public ResponseEntity<List<ProductDto>> getEmptyProductImageSuggestions() {
+        List<ProductDto> body = imageProductMatcherService.suggestImagesForAllProducts();
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<ProductDto>> getByNamePart(@RequestParam("namePart") String namePart) {
+        List<ProductDto> body = productService.findByNamepart(namePart);
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 

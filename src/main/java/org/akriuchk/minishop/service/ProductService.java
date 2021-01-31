@@ -7,7 +7,9 @@ import org.akriuchk.minishop.model.Category;
 import org.akriuchk.minishop.model.Image;
 import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.repository.ProductRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +33,23 @@ public class ProductService {
         return productRepository.findByName(name);
     }
 
+    public Product getByName(String name) {
+        return findByName(name).orElseThrow(() -> {
+            String errMsg = "Product %s is not found";
+            return new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(errMsg, name));
+        });
+    }
+
     public ProductDto findProduct(long productID) {
         return mapper.toDto(productRepository.findById(productID).get());
     }
 
-    public List<ProductDto> listProducts() {
+
+    public List<ProductDto> findByNamepart(String chars) {
+        return mapper.convert(productRepository.findTop10ByNameContainingIgnoreCaseOrderByName(chars));
+    }
+
+    public List<ProductDto> listPublicProducts() {
         return mapper.convert(productRepository.findAll());
     }
 

@@ -4,11 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.akriuchk.minishop.converter.ImageDtoMapper;
 import org.akriuchk.minishop.dto.ImageDto;
 import org.akriuchk.minishop.model.Image;
+import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.repository.ImageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
@@ -19,6 +23,8 @@ public class ImageService {
     private final ProductService productService;
     private final ImageDtoMapper mapper;
 
+    public static String ENCODED_FLAG = "EncodedFName";
+
     /**
      * Import new image, if product name is present, add there
      *
@@ -27,10 +33,18 @@ public class ImageService {
      */
     public void importNew(MultipartFile file, String productName) {
         Image image = new Image();
+
+        if (file.getOriginalFilename().startsWith(ENCODED_FLAG)) {
+            byte[] decodedFilename = Base64.getDecoder().decode(file.getOriginalFilename().substring(ENCODED_FLAG.length() + 1));
+            image.setFilename(new String(decodedFilename));
+        } else {
+            image.setFilename(file.getOriginalFilename());
+        }
+
         if (nonNull(productName) && !productName.isEmpty()) {
             productService.addImage(productName, image);
         }
-        image.setFilename(file.getOriginalFilename());
+
         image.setContent(extract(file));
         repository.save(image);
     }
@@ -83,5 +97,28 @@ public class ImageService {
         }
     }
 
-    //delete
+    /**
+     * Update image info: product
+     *
+     * @param patchList patch body
+     * @return updated image dto
+     */
+    public List<ImageDto> update(List<ImageDto> patchList) {
+        return patchList.stream().map(patch -> {
+                    Image existingImage = repository.getOne(patch.getId());
+                    if (nonNull(patch.getProduct())) {
+                        Product product = productService.getByName(patch.getProduct());
+                        existingImage.setProduct(product);
+                    } else {
+                        existingImage.setProduct(null);
+                    }
+
+                    return repository.save(existingImage);
+                }
+        )
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+//delete
 }

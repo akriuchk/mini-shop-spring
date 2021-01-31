@@ -37,3 +37,28 @@ Right file upload: FileImportControllerTest.postFile() => requires all headers, 
 ## 4. Images
 
 ## 5. Default category excel parser
+
+## Naming convention for Repository
+
+`findByName` => Optional<Product>
+
+`getByName` => Product
+
+## Spring JPA method names:
+
+https://www.baeldung.com/spring-data-derived-queries
+
+```java
+interface JpaRepo {
+    List<User> findByAgeGreaterThan(Integer age);
+    List<User> findByAgeGreaterThanEqual(Integer age);
+
+    List<User> findByNameOrderByName(String name);
+    List<User> findByNameOrderByNameAsc(String name);
+
+    List<User> findTop3ByAge();
+
+    Stream<Product> findAllByImagesIsEmpty();
+
+}
+```
