@@ -39,8 +39,8 @@ public class MiniShopApplication {
             catRepo.save(vasi_satin);
 
             Category vasi_bjaz = new Category();
-            vasi_satin.setName("КПБ\" Василиса\"");
-            vasi_satin.setDisplayName("КПБ \"Василиса\"");
+            vasi_bjaz.setName("КПБ\" Василиса\"");
+            vasi_bjaz.setDisplayName("КПБ \"Василиса\"");
             catRepo.save(vasi_bjaz);
 
             Category rai = new Category();
