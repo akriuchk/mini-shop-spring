@@ -7,6 +7,7 @@ import org.akriuchk.minishop.model.Image;
 import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.repository.ImageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -120,5 +121,13 @@ public class ImageService {
                 .collect(Collectors.toList());
     }
 
-//delete
+    /**
+     * Method provides list of images(max 50 items) without product
+     *
+     * @return images
+     */
+    @Transactional(readOnly = true)
+    public List<ImageDto> getUnmatched() {
+        return mapper.convert(repository.findByProductIsNull().limit(50));
+    }
 }

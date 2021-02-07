@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Mapper(componentModel = "spring")
 public interface ImageDtoMapper {
@@ -15,4 +16,5 @@ public interface ImageDtoMapper {
     ImageDto toDto(Image source);
 
     List<ImageDto> convert(List<Image> source);
+    List<ImageDto> convert(Stream<Image> source);
 }

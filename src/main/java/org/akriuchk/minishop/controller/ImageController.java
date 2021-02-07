@@ -39,6 +39,12 @@ public class ImageController {
         return new ResponseEntity<>(imageProductMatcherService.suggestImagesForProduct(productName), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/unmatched", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ImageDto>> getImagesWithoutProduct() {
+        return new ResponseEntity<>(imageService.getUnmatched(), HttpStatus.OK);
+    }
+
+
     @GetMapping(value = "/{id}/raw", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> findRaw(@PathVariable("id") Long id) {
         return new ResponseEntity<>(imageService.findRaw(id), HttpStatus.OK);

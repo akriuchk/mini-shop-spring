@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +43,7 @@ public class ImageProductMatcherService {
                     return product;
                 })
                 .filter(product -> product.getImages().size() != 0)
+                .sorted(Comparator.comparing(Product::getName))
                 .collect(Collectors.toList());
 
         return productMapper.convert(products);
@@ -63,7 +65,7 @@ public class ImageProductMatcherService {
     public List<Image> findMatchesForProduct(String productName) {
         String productNumber = extractNumber(productName);
         if (productNumber.isEmpty()) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
 
         return imageRepository.findByProductIsNull()

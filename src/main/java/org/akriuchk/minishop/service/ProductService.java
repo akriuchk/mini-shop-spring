@@ -35,7 +35,7 @@ public class ProductService {
 
     public Product getByName(String name) {
         return findByName(name).orElseThrow(() -> {
-            String errMsg = "Product %s is not found";
+            String errMsg = "Product '%s' is not found";
             return new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(errMsg, name));
         });
     }
