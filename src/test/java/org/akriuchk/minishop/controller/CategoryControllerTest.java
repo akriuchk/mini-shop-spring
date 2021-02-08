@@ -15,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.akriuchk.minishop.TestUtils.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,12 +30,18 @@ public class CategoryControllerTest extends TestCase {
 
     @Test
     public void testGetCategory() {
-        List<CategoryDto> result = toList(template.withBasicAuth("admin", "admin")
-                .getForEntity("/categories", CategoryDto[].class));
+        List<CategoryDto> result = toList(template.getForEntity("/categories", CategoryDto[].class));
 
         CategoryDto productDto = result.stream().filter(categoryDto -> categoryDto.getName().equals("test_cat")).findFirst().get();
-        assertThat(productDto.getProducts()).hasSize(4);
+        assertThat(productDto.getProducts()).isNull();
         assertThat(productDto.getName()).isNotNull().isNotBlank();
+    }
+
+    @Test
+    public void testGetOneCategory() {
+        assertThat(
+                template.getForEntity("/categories/test_cat", CategoryDto.class).getBody().getName()
+        ).isEqualTo("test_cat");
     }
 
     @Test
@@ -50,18 +55,13 @@ public class CategoryControllerTest extends TestCase {
         assertThat(apiResponseResponseEntity.getStatusCode()).isEqualByComparingTo(HttpStatus.CREATED);
 
 
-        Optional<CategoryDto> any = getCategory(dto.getName());
+        CategoryDto category = getCategory(dto.getName());
 
-        assertThat(any).isPresent();
-        assertThat(any.get().getProducts()).isEmpty();
+        assertThat(category.getProducts()).isEmpty();
     }
 
-    private Optional<CategoryDto> getCategory(String name) {
-        Optional<CategoryDto> any = toList(template.withBasicAuth("admin", "admin")
-                .getForEntity("/categories", CategoryDto[].class))
-                .stream().filter(c -> c.getName().equals(name))
-                .findAny();
-        return any;
+    private CategoryDto getCategory(String name) {
+        return template.getForEntity("/categories/" + name, CategoryDto.class).getBody();
     }
 
     @Test
@@ -81,7 +81,7 @@ public class CategoryControllerTest extends TestCase {
 
         assertThat(responseEntity.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
 
-        assertThat(getCategory(dto.getName()).get()
+        assertThat(getCategory(dto.getName())
                 .getDisplayName())
                 .isEqualTo(dto.getDisplayName());
     }

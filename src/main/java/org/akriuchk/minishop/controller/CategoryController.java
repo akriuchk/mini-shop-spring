@@ -28,6 +28,12 @@ public class CategoryController {
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
+    @GetMapping("/{name}")
+    public ResponseEntity<CategoryDto> getCategory(@PathVariable("name") String categoryName) {
+        CategoryDto body = categoryService.getByCategoryName(categoryName);
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
     @Secured("ROLE_ADMIN")
     @PostMapping
     public ResponseEntity<ApiResponse> addCategory(@RequestBody @Valid CategoryDto categoryDto) {
