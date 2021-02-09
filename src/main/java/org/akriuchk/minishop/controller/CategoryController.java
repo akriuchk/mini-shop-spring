@@ -23,8 +23,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getAll() {
-        List<CategoryDto> body = categoryService.listAll();
+    public ResponseEntity<List<CategoryDto>> getAll(@RequestParam(name = "onlyAvailable", defaultValue = "true") boolean onlyAvailable) {
+        List<CategoryDto> body = categoryService.listAll(onlyAvailable);
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 

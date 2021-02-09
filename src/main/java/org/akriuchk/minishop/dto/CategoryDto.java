@@ -3,7 +3,7 @@ package org.akriuchk.minishop.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class CategoryDto {
@@ -12,5 +12,5 @@ public class CategoryDto {
     private String name;
     @NotEmpty
     private String displayName;
-    private Set<ProductDto> products;
+    private List<ProductDto> products;
 }

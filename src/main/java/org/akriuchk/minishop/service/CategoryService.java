@@ -8,6 +8,7 @@ import org.akriuchk.minishop.model.Category;
 import org.akriuchk.minishop.repository.CategoriesRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +23,14 @@ public class CategoryService {
         repository.save(newCategory);
     }
 
-    public List<CategoryDto> listAll() {
-        List<Category> all = repository.findAll();
-        return mapper.lightConvert(all);
+    public List<CategoryDto> listAll(boolean onlyAvailable) {
+        List<Category> categories;
+        if (onlyAvailable) {
+            categories = repository.findAllByProductsIsNotEmpty();
+        } else {
+            categories = repository.findAll();
+        }
+        return mapper.lightConvert(categories);
     }
 
     public Optional<Category> findByName(String name) {
@@ -36,7 +42,10 @@ public class CategoryService {
     }
 
     public CategoryDto getByCategoryName(String categoryName) {
-        return mapper.toDto(repository.getByName(categoryName));
+        CategoryDto categoryDto = mapper.toDto(repository.getByName(categoryName));
+        categoryDto.getProducts()
+                .sort(Comparator.comparing(p -> p.getImages().isEmpty(), Comparator.naturalOrder()));
+        return categoryDto;
     }
 
     public CategoryDto update(String name, CategoryDto dto) {
