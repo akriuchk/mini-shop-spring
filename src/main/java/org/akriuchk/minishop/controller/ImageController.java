@@ -64,4 +64,13 @@ public class ImageController {
         imageService.replace(id, image);
         return new ResponseEntity<>(new ApiResponse(true, "Image was replaced"), HttpStatus.OK);
     }
+
+    @GetMapping("/favicon.ico")
+    public ResponseEntity<Void> iconStub() {
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/apple-touch-icon.png")
+    public ResponseEntity<Void> appleTouchIconStub() {
+        return ResponseEntity.ok().build();
+    }
 }
