@@ -1,0 +1,182 @@
+{
+  "id": 3,
+  "filename": "KPB_VASIL_BJAZ_22.05.20_SHORT_DELIVERY.xlsx",
+  "status": "FINISHED",
+  "createdAt": "2021-02-11T01:32:01",
+  "result": [
+    {
+      "category": {
+        "name": "КПБ\" Василиса\"",
+        "displayName": "КПБ \"Василиса\"",
+        "products": null
+      },
+      "updates": [
+        {
+          "id": 23,
+          "name": "9214.0",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": true,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": true
+        },
+        {
+          "id": 47,
+          "name": "9214/3",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": true,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": false,
+          "duoAvailable": true
+        },
+        {
+          "id": 85,
+          "name": "9216.0",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": true,
+          "smallAvailable": false,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": true
+        },
+        {
+          "id": 10,
+          "name": "9422.0",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": true,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": false,
+          "duoAvailable": false
+        },
+        {
+          "id": 63,
+          "name": "9424.0",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": false
+        },
+        {
+          "id": 19,
+          "name": "9425.0",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": false,
+          "duoAvailable": false
+        },
+        {
+          "id": 37,
+          "name": "9483/1",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": false,
+          "euroAvailable": true,
+          "duoAvailable": true
+        },
+        {
+          "id": 77,
+          "name": "9487 Кружева",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": true
+        },
+        {
+          "id": 45,
+          "name": "9488 Кружева",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": false,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": true
+        },
+        {
+          "id": 48,
+          "name": "9489 Кружева",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": false,
+          "euroAvailable": false,
+          "duoAvailable": true
+        },
+        {
+          "id": 24,
+          "name": "9289 нэкст",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": true
+        },
+        {
+          "id": 96,
+          "name": "9290 нэкст",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": true
+        },
+        {
+          "id": 40,
+          "name": "9292 НЭКСТ",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": true
+        },
+        {
+          "id": 51,
+          "name": "9294.0",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": true
+        },
+        {
+          "id": 78,
+          "name": "9296 НЭКСТ",
+          "images": [],
+          "category": "КПБ\" Василиса\"",
+          "isNew": false,
+          "smallAvailable": true,
+          "middleAvailable": true,
+          "euroAvailable": true,
+          "duoAvailable": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 package org.akriuchk.minishop.controller.parsers;
 
 import org.akriuchk.minishop.dto.ImportFileDto;
-import org.akriuchk.minishop.dto.importinfo.ImportResultDto;
 import org.akriuchk.minishop.model.SupportedCategories;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
 import static org.akriuchk.minishop.TestUtils.mapFromJson;
 import static org.akriuchk.minishop.TestUtils.postFile;
@@ -34,12 +32,27 @@ public class FileImportControllerVasilisaBjazCatalogParserTest {
     @Test
     public void testInitialVasilImport() throws IOException {
         String filename = "KPB_VASIL_BJAZ_22.05.20.xlsx";
-        ResponseEntity<ImportFileDto> response = postFile(template, filename, "/files", ImportFileDto.class, body -> body.put("category", Collections.singletonList(SupportedCategories.VASILISA_BYAZ.toString())));
+        ResponseEntity<ImportFileDto> response = upload(filename);
 
-        List<ImportResultDto> result = response.getBody().getResult();
         ImportFileDto expected = mapFromJson(new ClassPathResource("expected/KPB_VASIL_BJAZ_22_05_20.json").getFile(), ImportFileDto.class);
 
-        assertThat(result).hasSameElementsAs(expected.getResult());
+        assertThat(response.getBody().getResult())
+                .hasSameElementsAs(expected.getResult());
+    }
 
+    @Test
+    public void testDeliveryVasilImport() throws IOException {
+        upload("KPB_VASIL_BJAZ_22.05.20_SHORT_INIT.xlsx");
+        ResponseEntity<ImportFileDto> deliveryUpload = upload("KPB_VASIL_BJAZ_22.05.20_SHORT_DELIVERY.xlsx");
+
+        ImportFileDto expected = mapFromJson(new ClassPathResource("expected/KPB_VASIL_BJAZ_22_05_20_DELIVERY.json").getFile(), ImportFileDto.class);
+
+        assertThat(deliveryUpload.getBody().getResult())
+                .hasSameElementsAs(expected.getResult());
+    }
+
+    private ResponseEntity<ImportFileDto> upload(String filename) {
+        return postFile(template, filename, "/files", ImportFileDto.class,
+                body -> body.put("category", Collections.singletonList(SupportedCategories.VASILISA_BYAZ.toString())));
     }
 }

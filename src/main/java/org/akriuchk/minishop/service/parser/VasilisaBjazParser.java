@@ -14,7 +14,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -71,7 +74,7 @@ public class VasilisaBjazParser extends AbstractParser {
                 }
             });
         });
-//        processNotUpdatedProducts(catalogs, updatedProducts);
+        processNotUpdatedProducts(catalogs, updatedAndNewProducts.keySet());
 
         return createReport();
     }
@@ -111,43 +114,6 @@ public class VasilisaBjazParser extends AbstractParser {
 
         updatedAndNewProducts.put(product, isNew.get());
         return product;
-    }
-
-    private void extractError(Row row) {
-        try {
-            StringBuilder sb = new StringBuilder(" ");
-            sb.append("Undefined row: ");
-            sb.append(row.getRowNum());
-            sb.append("; Content:");
-            if (row.getZeroHeight() || row.getRowStyle().getHidden()) {
-                sb.append("empty hidden row");
-            } else {
-                for (int cellNum = row.getFirstCellNum(); cellNum < cellNum + row.getPhysicalNumberOfCells(); cellNum++) {
-                    sb.append(getStringValue(row.getCell(cellNum)).trim());
-                }
-            }
-            log.error(sb.toString());
-
-        } catch (NullPointerException e) {
-            log.error("Undefined row {}", row.getRowNum());
-        }
-    }
-
-    /**
-     * if linen was not in file then set availability to false
-     *
-     * @param categories      previous categories
-     * @param updatedProducts new categories
-     */
-    void processNotUpdatedProducts(List<Category> categories, Set<Product> updatedProducts) {
-        categories.stream().flatMap(category -> category.getProducts().stream())
-                .filter(product -> !updatedProducts.contains(product))
-                .forEach(product -> {
-                    product.setSmallAvailable(false);
-                    product.setMiddleAvailable(false);
-                    product.setDuoAvailable(false);
-                    product.setEuroAvailable(false);
-                });
     }
 
     private List<ImportResultDto> createReport() {

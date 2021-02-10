@@ -7,15 +7,19 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private long id;
 
+    @EqualsAndHashCode.Include
     private String name;
     private boolean isSmallAvailable;
     private boolean isMiddleAvailable;
@@ -28,12 +32,11 @@ public class Product {
             orphanRemoval = false,
             fetch = FetchType.LAZY
     )
-    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "catalog_id", nullable = false)
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Category category;
 }

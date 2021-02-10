@@ -28,7 +28,7 @@ public class DefaultParser extends AbstractParser {
     private final CategoryMapper categoryMapper;
     private final ProductMapper productMapper;
 
-    private static final Category ERROR_PRODUCT = new Category();
+    private static final Category UNCATEGORIZED = new Category();
 
     public DefaultParser(CategoryService categoryService, ProductService productService,
                          CategoryMapper categoryMapper, ProductMapper productMapper) {
@@ -54,7 +54,7 @@ public class DefaultParser extends AbstractParser {
                     Optional<Category> category = categoryService.findByName(categoryName);
 
                     if (!category.isPresent()) {
-                        catalogs.add(ERROR_PRODUCT);
+                        catalogs.add(UNCATEGORIZED);
                         log.error("{} not found! Add it first to catalog list", categoryName);
                     }
                     category.ifPresent(catalogs::add);
@@ -90,7 +90,7 @@ public class DefaultParser extends AbstractParser {
                 }
             });
         });
-//        processNotUpdatedProducts(catalogs, updatedProducts);
+        processNotUpdatedProducts(catalogs, updatedAndNewProducts.keySet());
 
         return createReport();
     }
@@ -186,22 +186,6 @@ public class DefaultParser extends AbstractParser {
     }
 
 
-    /**
-     * if linen was not in file then set availability to false
-     *
-     * @param categories      previous categories
-     * @param updatedProducts new categories
-     */
-    void processNotUpdatedProducts(List<Category> categories, Set<Product> updatedProducts) {
-        categories.stream().flatMap(category -> category.getProducts().stream())
-                .filter(product -> !updatedProducts.contains(product))
-                .forEach(product -> {
-                    product.setSmallAvailable(false);
-                    product.setMiddleAvailable(false);
-                    product.setDuoAvailable(false);
-                    product.setEuroAvailable(false);
-                });
-    }
 
 
     @Override

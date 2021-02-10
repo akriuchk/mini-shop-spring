@@ -25,8 +25,6 @@ public class CatalogParserManager {
     private final CategoryMapper categoryMapper;
     private final ProductMapper productMapper;
 
-    //todo output: category, product with diff: new products(!), changes in availability
-
     public List<ImportResultDto> importNewCatalog(MultipartFile importFile, SupportedCategories category) {
         Workbook book;
         try {
