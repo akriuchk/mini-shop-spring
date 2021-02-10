@@ -1,7 +1,6 @@
 package org.akriuchk.minishop.controller;
 
 import org.akriuchk.minishop.dto.ProductDto;
-import org.akriuchk.minishop.model.Product;
 import org.akriuchk.minishop.rest.ApiResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -99,16 +98,23 @@ public class ProductControllerTest {
 
     @Test
     public void testUpdateProduct() {
-        Product dto = new Product();
+        ProductDto dto = new ProductDto();
+        dto.setId(1L);
         dto.setName("AAA");
         dto.setSmallAvailable(true);
         dto.setMiddleAvailable(false);
         dto.setEuroAvailable(false);
         dto.setDuoAvailable(true);
+        dto.setCategory("test_cat");
 
         ResponseEntity<ApiResponse> apiResponseResponseEntity = template.withBasicAuth("admin", "admin")
                 .postForEntity("/products/1", dto, ApiResponse.class);
         assertThat(apiResponseResponseEntity.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
+
+        ResponseEntity<ProductDto> result = template.withBasicAuth("admin", "admin")
+                .getForEntity("/products/1", ProductDto.class);
+        assertThat(result.getBody()).isEqualToIgnoringNullFields(dto);
+//        assertThat(result).hasSize(1);
     }
 
     @Test
