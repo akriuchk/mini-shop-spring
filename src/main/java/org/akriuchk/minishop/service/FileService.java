@@ -8,8 +8,10 @@ import org.akriuchk.minishop.model.ImportFile;
 import org.akriuchk.minishop.model.SupportedCategories;
 import org.akriuchk.minishop.repository.FilesRepository;
 import org.akriuchk.minishop.service.parser.CatalogParserManager;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class FileService {
             return importFileDto;
         } catch (Exception e) {
             importFile.setStatus(ERROR);
-            throw new RuntimeException(e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } finally {
             repository.save(importFile);
         }

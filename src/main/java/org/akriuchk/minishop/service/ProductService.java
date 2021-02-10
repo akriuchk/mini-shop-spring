@@ -24,7 +24,8 @@ public class ProductService {
 
     public void addProduct(ProductDto product) {
         Product pojo = mapper.toPojo(product);
-        Category category = categoryService.findByName(product.getCategory()).orElseThrow(() -> new RuntimeException(product.getCategory() + " not found"));
+        Category category = categoryService.findByName(product.getCategory())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, product.getCategory() + " not found"));
         pojo.setCategory(category);
         productRepository.save(pojo);
     }
@@ -49,13 +50,8 @@ public class ProductService {
         return mapper.convert(productRepository.findTop10ByNameContainingIgnoreCaseOrderByName(chars));
     }
 
-    public List<ProductDto> listPublicProducts() {
-        return mapper.convert(productRepository.findAll());
-    }
-
-    //todo change to product dto
-    public Product updateProduct(long productID, Product newProduct) {
-        Product oldProduct = productRepository.findById(productID).get();
+    public Product updateProduct(long productID, ProductDto newProduct) {
+        Product oldProduct = productRepository.getOne(productID);
         oldProduct.setName(newProduct.getName());
         oldProduct.setSmallAvailable(newProduct.isSmallAvailable());
         oldProduct.setMiddleAvailable(newProduct.isMiddleAvailable());

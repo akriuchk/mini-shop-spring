@@ -47,7 +47,7 @@ public class ProductController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/{productID}")
-    public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productID") long productID, @RequestBody @Valid Product product) {
+    public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productID") long productID, @RequestBody @Valid ProductDto product) {
         Product updateProduct = productService.updateProduct(productID, product);
         return new ResponseEntity<>(new ApiResponse(true, "Product has been updated"), HttpStatus.OK);
     }

@@ -49,7 +49,7 @@ public class CategoryService {
     }
 
     public CategoryDto update(String name, CategoryDto dto) {
-        Category category = repository.findByName(name).get();
+        Category category = repository.getByName(name);
         mapper.update(dto, category);
         repository.save(category);
         return mapper.toDto(category);

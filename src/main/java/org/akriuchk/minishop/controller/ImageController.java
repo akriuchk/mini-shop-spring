@@ -24,7 +24,7 @@ public class ImageController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping
-    public ResponseEntity<ApiResponse> importFile(@RequestParam("file") MultipartFile image, String product) {
+    public ResponseEntity<ApiResponse> importImage(@RequestParam("file") MultipartFile image, String product) {
         imageService.importNew(image, product);
         return new ResponseEntity<>(new ApiResponse(true, "Image to product added"), HttpStatus.CREATED);
     }
